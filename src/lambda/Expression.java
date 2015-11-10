@@ -1,6 +1,6 @@
 package lambda;
 import java.util.Set;
-/*
+/**
  * The MIT License (MIT)
  *
  * Copyright (c) 2015 Stefan Hanenberg (stefan.hanenberg@gmail.com)

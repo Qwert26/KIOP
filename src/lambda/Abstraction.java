@@ -1,5 +1,4 @@
 package lambda;
-import java.util.HashSet;
 import java.util.Set;
 /*
  * The MIT License (MIT)
@@ -37,8 +36,8 @@ public class Abstraction extends Expression {
 		return body.substituteWith(paramName, appliedParameter);
 	}	
 	public Set<String> FI() {
-		Set<String> ret = new HashSet<String>();
-		body.FI().remove(paramName);
+		Set<String> ret=body.FI();
+		ret.remove(paramName);
 		return ret;
 	}
 	@Override

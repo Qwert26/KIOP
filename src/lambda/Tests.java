@@ -37,6 +37,5 @@ public class Tests extends TestCase {
 		System.out.println(ex2);
 		assertTrue(ex2 instanceof Variable);
 		assertEquals("y", ((Variable) ex2).varName);
-		
 	}
 }

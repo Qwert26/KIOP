@@ -29,7 +29,6 @@ public class Variable extends Expression {
 	}
 	@Override
 	public Expression reduce() {
-		
 		return null;
 	}
 	/**

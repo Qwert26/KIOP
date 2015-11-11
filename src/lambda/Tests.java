@@ -1,5 +1,6 @@
 package lambda;
-import junit.framework.TestCase;
+import org.junit.*;
+import static org.junit.Assert.*;
 /*
  * The MIT License (MIT)
  *
@@ -20,7 +21,7 @@ import junit.framework.TestCase;
  * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  **/
-public class Tests extends TestCase {
+public class Tests {
 	public Application APP(Expression left, Expression right) {
 		return new Application(left, right);
 	}
@@ -30,7 +31,8 @@ public class Tests extends TestCase {
 	public Variable VAR(String varName) {
 		return new Variable(varName);
 	}
-	public void test01() {
+	@Test
+	public void testReduce() {
 		// (λx.x) y
 		Expression ex = APP(ABS("x", VAR("x")), VAR("y"));
 		Expression ex2 = ex.reduce();

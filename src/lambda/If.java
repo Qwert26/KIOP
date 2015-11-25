@@ -1,6 +1,68 @@
 package lambda;
 import java.util.Set;
+import org.junit.*;
+import static org.junit.Assert.*;
 public class If extends Expression {
+	public static final class IfTestUnit {
+		@Test
+		public void testEvaluationTrue() {
+			If ifExpr = new If(new Variable("true"), new Variable("true"), new Variable("false"));
+			// if true then true else false -> true
+			assertTrue(((Variable) ifExpr.reduce()).varName.equals("true"));
+		}
+		@Test
+		public void testEvaluationFalse() {
+			If ifExpr2 = new If(new Variable("false"), new Variable("true"), new Variable("false"));
+			// if true then true else false -> true
+			assertTrue(((Variable) ifExpr2.reduce()).varName.equals("false"));
+		}
+		@Test
+		public void testEvaluationFunction() {
+			If ifExpr3 = 
+					new If(
+						new Application(new Variable("not"), new Variable("true")), 
+						new Variable("true"), 
+						new Variable("false"));
+			// if true then true else false -> true
+			assertTrue(((Variable) ifExpr3.reduce()).varName.equals("false"));
+		}
+		@Test
+		public void testTypeBoolean() {
+			// if (true) then true else true
+			If ifExpr = new If(new Variable("true"), new Variable("true"), new Variable("true"));
+			assertEquals(new Boolean(), ifExpr.getType(Environment.INSTANCE));
+		}
+		@Test
+		public void testTypeNumber() {
+			If ifExpr = new If(new Variable("true"), new Variable("1"), new Variable("2"));
+			assertEquals(new Number(), ifExpr.getType(Environment.INSTANCE));
+		}
+		@Test(expected=RuntimeException.class)
+		public void testTypeUnequal() {
+			final If ifExpr3 = new If(new Variable("true"), new Variable("1"), new Variable("true"));
+			ifExpr3.getType(Environment.INSTANCE);
+		}
+		@Test(expected=RuntimeException.class)
+		public void testWrongConditionType() {
+			final If ifExpr4 = new If(new Variable("1"), new Variable("1"), new Variable("true"));
+			ifExpr4.getType(Environment.INSTANCE);
+		}
+		@Test
+		@Ignore("No asserts!")
+		public void test() {
+			final If ifExpr5 = 
+					new If(
+						new Application(new Variable("not"), new Variable("true")), 
+						new Variable("1"), new Variable("2"));
+			ifExpr5.getType(Environment.INSTANCE);
+			
+			final If ifExpr6 = 
+					new If(
+						new Application(new Variable("largerThan0"), new Variable("1")), 
+						new Variable("1"), new Variable("2"));
+			ifExpr6.getType(Environment.INSTANCE);
+		}
+	}
 	public Expression conditionExpression;
 	public Expression thenExpression;
 	public Expression elseExpression;

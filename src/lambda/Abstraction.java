@@ -1,11 +1,6 @@
 package lambda;
 import java.util.Set;
 public class Abstraction extends Expression {
-	@Override
-	// Call by value!!!
-	public boolean isReducible() {
-		return false;
-	}
 	public String paramName;
 	public Expression body;
 	public Abstraction(String paramName, Expression body) {
@@ -30,5 +25,14 @@ public class Abstraction extends Expression {
 		if (!paramName.equals(aName) &&  !exp.FI().contains(paramName))
 			body = body.substituteWith(aName, exp);
 		return this;
+	}
+	@Override
+	public boolean isReducible() {
+		return false;
+	}
+	@Override
+	public Type getType(Environment e) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

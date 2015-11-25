@@ -1,10 +1,6 @@
 package lambda;
 import java.util.Set;
 public class Application extends Expression {
-	@Override
-	public boolean isReducible() {
-		return right.isReducible() || left instanceof Abstraction || left.isReducible();
-	}
 	Expression left;
 	Expression right;
 	public Application(Expression left, Expression right) {
@@ -14,15 +10,15 @@ public class Application extends Expression {
 	}
 	@Override
 	public Expression reduce() {
-		if (right.isReducible()) {
-			right = right.reduce();
-			return this;
-		} else if (left instanceof Abstraction) {
-			return ((Abstraction) left).reduceWith(right);
-		} else if (left.isReducible()) {
+		if (left.isReducible()) {
 			left = left.reduce();
 			return this;
 		}
+		
+		if (left instanceof Abstraction) {
+			return ((Abstraction) left).reduceWith(right);
+		}
+		
 		return this;
 	}
 	@Override
@@ -36,5 +32,26 @@ public class Application extends Expression {
 		Set<String> s = left.FI();
 		s.addAll(right.FI());
 		return s;
+	}
+	@Override
+	public boolean isReducible() {
+		return
+			left instanceof Abstraction ||
+			left.isReducible() 
+			//TODO Hier in Vorlesung aufgehört:
+			//|| left.isExpressionConstant() && left.isFunction()
+			;
+	}
+	@Override
+	public Type getType(Environment e) {
+		if (left.getType(e) instanceof FunctionType) {
+			Type t2 = right.getType(e);
+			FunctionType f = (FunctionType) left.getType(e);
+			Type inFunctionType = f.left;
+			if (t2.equals(inFunctionType)) {
+				return f.right;
+			}
+		}
+		return null;
 	}
 }

@@ -1,6 +1,17 @@
 package lambda;
 import java.util.Set;
+import org.junit.*;
+import static org.junit.Assert.*;
 public class Application extends Expression {
+	public static final class ApplicationTestUnit {
+		@Test
+		public void testReduce() {
+			Expression ex = new Application(new Abstraction("x",new Variable("x")),new Variable("y"));
+			Expression ex2 = ex.reduce();
+			assertTrue(ex2 instanceof Variable);
+			assertEquals("y", ((Variable) ex2).varName);
+		}
+	}
 	Expression left;
 	Expression right;
 	public Application(Expression left, Expression right) {

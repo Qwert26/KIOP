@@ -14,11 +14,9 @@ public class Application extends Expression {
 			left = left.reduce();
 			return this;
 		}
-		
 		if (left instanceof Abstraction) {
 			return ((Abstraction) left).reduceWith(right);
 		}
-		
 		return this;
 	}
 	@Override
@@ -38,7 +36,7 @@ public class Application extends Expression {
 		return
 			left instanceof Abstraction ||
 			left.isReducible() 
-			//TODO Hier in Vorlesung aufgehÃ¶rt:
+			//TODO Hier in Vorlesung aufgehört:
 			//|| left.isExpressionConstant() && left.isFunction()
 			;
 	}

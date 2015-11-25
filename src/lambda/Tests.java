@@ -38,7 +38,6 @@ public class Tests extends TestCase {
 		assertEquals(new Number(), ifExpr.getType(e));
 		
 		final If ifExpr3 = new If(new Variable("true"), new Variable("1"), new Variable("true"));
-
 		try {
 			ifExpr3.getType(e);
 			assertTrue(false);
@@ -47,7 +46,6 @@ public class Tests extends TestCase {
 		}
 		
 		final If ifExpr4 = new If(new Variable("1"), new Variable("1"), new Variable("true"));
-
 		try {
 			ifExpr4.getType(e);
 			assertTrue(false);
@@ -60,14 +58,12 @@ public class Tests extends TestCase {
 				new If(
 					new Application(new Variable("not"), new Variable("true")), 
 					new Variable("1"), new Variable("2"));
-		
 		ifExpr5.getType(e);
 		
 		final If ifExpr6 = 
 				new If(
 					new Application(new Variable("largerThan0"), new Variable("1")), 
 					new Variable("1"), new Variable("2"));
-		
 		ifExpr6.getType(e);
 	}	
 	public void test_TypedExpression() {

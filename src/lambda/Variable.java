@@ -60,4 +60,12 @@ public class Variable extends Expression {
 	public Type getType(Environment e) {
 		return Environment.env.get(this.varName);
 	}
+	@Override
+	public boolean isFunction() {
+		return false;
+	}
+	@Override
+	public boolean isExpressionConstant() {
+		return true;
+	}
 }

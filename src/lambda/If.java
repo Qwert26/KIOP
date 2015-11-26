@@ -109,4 +109,13 @@ public class If extends Expression {
 		if (!thenType.equals(elseType)) throw new RuntimeException("Geh wech");
 		return thenType;
 	}
+	@Override
+	public boolean isFunction() {
+		return true;
+	}
+	@Override
+	public boolean isExpressionConstant() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

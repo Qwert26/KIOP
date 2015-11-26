@@ -6,4 +6,6 @@ public abstract class Expression {
 	public abstract boolean isReducible();
 	public abstract Set<String> FI();
 	public abstract Type getType(Environment e);
+	public abstract boolean isFunction();
+	public abstract boolean isExpressionConstant();
 }

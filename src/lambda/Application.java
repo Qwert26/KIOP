@@ -47,8 +47,7 @@ public class Application extends Expression {
 		return
 			left instanceof Abstraction ||
 			left.isReducible() 
-			//TODO Hier in Vorlesung aufgehört:
-			//|| left.isExpressionConstant() && left.isFunction()
+			||left.isExpressionConstant()&&left.isFunction()
 			;
 	}
 	@Override
@@ -62,5 +61,14 @@ public class Application extends Expression {
 			}
 		}
 		return null;
+	}
+	@Override
+	public boolean isFunction() {
+		return false;
+	}
+	@Override
+	public boolean isExpressionConstant() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

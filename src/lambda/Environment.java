@@ -10,7 +10,7 @@ public final class Environment {
 		env.put("0", new Number());
 		env.put("1", new Number());
 		env.put("2", new Number());
-		env.put("not", new FunctionType(new  Boolean(),new  Boolean()));
-		env.put("largerThan0", new FunctionType(new  Number(),new  Boolean()));
+		env.put("not", new FunctionType(new Boolean(),new Boolean()));
+		env.put("largerThan0", new FunctionType(new Number(),new Boolean()));
 	}
 }

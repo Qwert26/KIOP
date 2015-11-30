@@ -37,12 +37,10 @@ public class Abstraction extends Expression {
 	}
 	@Override
 	public boolean isFunction() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 	@Override
 	public boolean isExpressionConstant() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

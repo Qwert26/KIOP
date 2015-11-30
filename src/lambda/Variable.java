@@ -20,6 +20,11 @@ public class Variable extends Expression {
 			Variable v = new Variable("0");
 			assertEquals(new Number(), v.getType(Environment.INSTANCE));	
 		}
+		@Test
+		public void testFunctionTypeBooleanBoolean() {
+			Variable v=new Variable("not");
+			assertEquals(new FunctionType(new Boolean(),new Boolean()),v.getType(Environment.INSTANCE));
+		}
 	}
 	public final String varName;
 	public Variable(String varName) {
@@ -37,6 +42,7 @@ public class Variable extends Expression {
 	 * @param exp
 	 * @return
 	 */
+	@Override
 	public Expression substituteWith(String aName, Expression exp) {
 		if (aName.equals(varName)) {
 			return exp;
@@ -44,6 +50,7 @@ public class Variable extends Expression {
 			return this;
 		}
 	}
+	@Override
 	public Set<String> FI() {
 		Set<String> ret = new HashSet<String>();
 		ret.add(varName);
@@ -53,10 +60,7 @@ public class Variable extends Expression {
 	public boolean isReducible() {
 		return false;
 	}
-	/*
-	 * Regel: Wenn this.varName in E, dann E => this: (this.varName in E) 
-	 * @see v02SimpleLambda_bugFix.Expression#getType(v02SimpleLambda_bugFix.Environment)
-	 */
+	@Override
 	public Type getType(Environment e) {
 		return Environment.env.get(this.varName);
 	}

@@ -28,6 +28,9 @@ public class Application extends Expression {
 		if (left instanceof Abstraction) {
 			return ((Abstraction) left).reduceWith(right);
 		}
+		if (left instanceof Variable&&left.isFunction()) {
+			//TODO
+		}
 		return this;
 	}
 	@Override

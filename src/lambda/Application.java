@@ -6,7 +6,7 @@ public class Application extends Expression {
 	public static final class ApplicationTestUnit {
 		@Test
 		public void testReduce() {
-			Expression ex = new Application(new Abstraction("x",new Variable("x")),new Variable("y"));
+			Expression ex = new Application(new Abstraction("x",null,new Variable("x")),new Variable("y"));
 			Expression ex2 = ex.reduce();
 			assertTrue(ex2 instanceof Variable);
 			assertEquals("y", ((Variable) ex2).varName);

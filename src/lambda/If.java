@@ -30,22 +30,22 @@ public class If extends Expression {
 		public void testTypeBoolean() {
 			// if (true) then true else true
 			If ifExpr = new If(new Variable("true"), new Variable("true"), new Variable("true"));
-			assertEquals(new Boolean(), ifExpr.getType(Environment.INSTANCE));
+			assertEquals(new Boolean(), ifExpr.getType(new Environment()));
 		}
 		@Test
 		public void testTypeNumber() {
 			If ifExpr = new If(new Variable("true"), new Variable("1"), new Variable("2"));
-			assertEquals(new Number(), ifExpr.getType(Environment.INSTANCE));
+			assertEquals(new Number(), ifExpr.getType(new Environment()));
 		}
 		@Test(expected=RuntimeException.class)
 		public void testTypeUnequal() {
 			final If ifExpr3 = new If(new Variable("true"), new Variable("1"), new Variable("true"));
-			ifExpr3.getType(Environment.INSTANCE);
+			ifExpr3.getType(new Environment());
 		}
 		@Test(expected=RuntimeException.class)
 		public void testWrongConditionType() {
 			final If ifExpr4 = new If(new Variable("1"), new Variable("1"), new Variable("true"));
-			ifExpr4.getType(Environment.INSTANCE);
+			ifExpr4.getType(new Environment());
 		}
 		@Test
 		@Ignore("No asserts!")
@@ -54,13 +54,18 @@ public class If extends Expression {
 					new If(
 						new Application(new Variable("not"), new Variable("true")), 
 						new Variable("1"), new Variable("2"));
-			ifExpr5.getType(Environment.INSTANCE);
+			ifExpr5.getType(new Environment());
 			
 			final If ifExpr6 = 
 					new If(
 						new Application(new Variable("largerThan0"), new Variable("1")), 
 						new Variable("1"), new Variable("2"));
-			ifExpr6.getType(Environment.INSTANCE);
+			ifExpr6.getType(new Environment());
+		}
+		@Test
+		public void testIfSumType() {
+			If ifExpr=new If(new Variable("true"),new Variable("1"),new Variable("false"));
+			assertEquals(new SumType(new Number(),new Boolean()),ifExpr.getType(new Environment()));
 		}
 	}
 	public Expression conditionExpression;
@@ -105,9 +110,8 @@ public class If extends Expression {
 		Type conditionType = conditionExpression.getType(e);
 		Type thenType = thenExpression.getType(e);
 		Type elseType = elseExpression.getType(e);
-		if (!new Boolean().equals(conditionType)) throw new RuntimeException("Geh wech");
-		if (!thenType.equals(elseType)) throw new RuntimeException("Geh wech");
-		return thenType;
+		if (!new Boolean().equals(conditionType)) throw new RuntimeException("Bedingung nicht vom Typ Boolean!");
+		return new SumType(thenType,elseType);
 	}
 	@Override
 	public boolean isFunction() {

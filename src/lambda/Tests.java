@@ -6,5 +6,6 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses(value={	If.IfTestUnit.class,
 						Variable.VariableTestUnit.class,
 						Application.ApplicationTestUnit.class,
-						Abstraction.AbstractionTestUnit.class})
+						Abstraction.AbstractionTestUnit.class,
+						Case.CaseTestUnit.class})
 public class Tests {}

@@ -26,8 +26,8 @@ public class Application extends Expression {
 		return this;
 	}
 	@Override
-	public Set<String> FI() {
-		Set<String> s = left.FI();
+	public Set FI() {
+		Set s = left.FI();
 		s.addAll(right.FI());
 		return s;
 	}
@@ -36,8 +36,8 @@ public class Application extends Expression {
 		return
 			left instanceof Abstraction ||
 			left.isReducible() 
-			//TODO Hier in Vorlesung aufgehört:
-			//|| left.isExpressionConstant() && left.isFunction()
+// TODO Hier in Vorlesung aufgehÃ¶rt:
+//			|| left.isExpressionConstant() && left.isFunction()
 			;
 	}
 	@Override

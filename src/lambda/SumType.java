@@ -1,16 +1,15 @@
 package lambda;
-public class FunctionType extends Type {
-	public final Type left;
-	public final Type right;
-	public FunctionType(Type left, Type right) {
+public class SumType extends Type {
+	public Type left;
+	public Type right;
+	public SumType(Type left, Type right) {
 		super();
 		this.left = left;
 		this.right = right;
 	}
+	@Override
 	public String toString() {
-//		System.out.println(left);
-//		System.out.println(right);
-		return left.toString() + " -> " + right.toString();
+		return left.toString() + " + " + right.toString();
 	}
 	@Override
 	public int hashCode() {
@@ -28,7 +27,7 @@ public class FunctionType extends Type {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FunctionType other = (FunctionType) obj;
+		SumType other = (SumType) obj;
 		if (left == null) {
 			if (other.left != null)
 				return false;

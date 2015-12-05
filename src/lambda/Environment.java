@@ -13,4 +13,12 @@ public class Environment {
 		e.env.put("largerThan0", new FunctionType(new  Number(),new  Boolean()));
 		return e;
 	}
+	@Override
+	public Environment clone() {
+		Environment e = new Environment();
+		@SuppressWarnings("unchecked")
+		HashMap<String, Type> env2 = (HashMap<String, Type>) env.clone();
+		e.env = env2;
+		return e;
+	}
 }

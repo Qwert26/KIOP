@@ -23,7 +23,7 @@ public class Inl extends Expression {
 		return false;
 	}
 	@Override
-	public Set FI() {
+	public Set<String> FI() {
 		// TODO Auto-generated method stub
 		return null;
 	}

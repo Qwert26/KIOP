@@ -1,5 +1,4 @@
 package lambda;
-import java.util.HashSet;
 import java.util.Set;
 public class Abstraction extends Expression {
 	public String paramName;
@@ -18,9 +17,9 @@ public class Abstraction extends Expression {
 	public Expression reduceWith(Expression appliedParameter) {
 		return body.substituteWith(paramName, appliedParameter);
 	}	
-	public Set FI() {
-		Set ret = new HashSet();
-		body.FI().remove(paramName);
+	public Set<String> FI() {
+		Set<String> ret = body.FI();
+		ret.remove(paramName);
 		return ret;
 	}
 	@Override

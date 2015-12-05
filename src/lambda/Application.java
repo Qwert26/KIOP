@@ -26,8 +26,8 @@ public class Application extends Expression {
 		return this;
 	}
 	@Override
-	public Set FI() {
-		Set s = left.FI();
+	public Set<String> FI() {
+		Set<String> s = left.FI();
 		s.addAll(right.FI());
 		return s;
 	}

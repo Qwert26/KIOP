@@ -32,7 +32,7 @@ public class Tests extends TestCase {
 		
 		Application app2 = APP(abs, value2);
 		Type t2 = app2.getType(e);
-		assertEquals(new Boolean(), t);
+		assertEquals(new Boolean(),t2);
 	}	
 	public void test_typeOfCase() {
 		Environment e = Environment.createEnvironment();

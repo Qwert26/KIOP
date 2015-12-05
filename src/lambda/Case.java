@@ -19,7 +19,7 @@ public class Case extends Expression {
 	public Expression reduceWith(Expression appliedParameter) {
 		throw new RuntimeException("not yet implemented");
 	}	
-	public Set FI() {
+	public Set<String> FI() {
 		throw new RuntimeException("not yet implemented");
 	}
 	@Override

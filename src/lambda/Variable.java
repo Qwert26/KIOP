@@ -25,8 +25,8 @@ public class Variable extends Expression {
 			return this;
 		}
 	}
-	public Set FI() {
-		Set ret = new HashSet();
+	public Set<String> FI() {
+		Set<String> ret = new HashSet<String>();
 		ret.add(varName);
 		return ret; 
 	}

@@ -8,22 +8,22 @@ public class Variable extends Expression {
 		@Test
 		public void testBooleanTypeTrue() {
 			Variable v = new Variable("true");
-			assertEquals(new Boolean(), v.getType(Environment.INSTANCE));
+			assertEquals(new Boolean(), v.getType(new Environment()));
 		}
 		@Test
 		public void testBooleanTypeFalse() {
 			Variable v = new Variable("false");
-			assertEquals(new Boolean(), v.getType(Environment.INSTANCE));
+			assertEquals(new Boolean(), v.getType(new Environment()));
 		}
 		@Test
 		public void testNumberType() {
 			Variable v = new Variable("0");
-			assertEquals(new Number(), v.getType(Environment.INSTANCE));	
+			assertEquals(new Number(), v.getType(new Environment()));	
 		}
 		@Test
 		public void testFunctionTypeBooleanBoolean() {
 			Variable v=new Variable("not");
-			assertEquals(new FunctionType(new Boolean(),new Boolean()),v.getType(Environment.INSTANCE));
+			assertEquals(new FunctionType(new Boolean(),new Boolean()),v.getType(new Environment()));
 		}
 	}
 	public final String varName;
@@ -62,7 +62,7 @@ public class Variable extends Expression {
 	}
 	@Override
 	public Type getType(Environment e) {
-		return Environment.env.get(this.varName);
+		return e.env.get(this.varName);
 	}
 	@Override
 	public boolean isFunction() {

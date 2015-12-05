@@ -1,9 +1,10 @@
 <<<<<<< HEAD
 package lambda;
-import org.junit.runner.*;
-import org.junit.runners.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
+<<<<<<< HEAD
 @SuiteClasses(value={If.IfTestUnit.class,Variable.VariableTestUnit.class,Application.ApplicationTestUnit.class})
 public class Tests {}
 =======
@@ -132,3 +133,11 @@ public class Tests extends TestCase {
 	}
 }
 >>>>>>> refs/remotes/origin/master
+=======
+@SuiteClasses(value={	If.IfTestUnit.class,
+						Variable.VariableTestUnit.class,
+						Application.ApplicationTestUnit.class,
+						Abstraction.AbstractionTestUnit.class,
+						Case.CaseTestUnit.class})
+public class Tests {}
+>>>>>>> origin/work

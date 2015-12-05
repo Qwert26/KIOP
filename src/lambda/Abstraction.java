@@ -1,11 +1,22 @@
 package lambda;
 import java.util.Set;
+import org.junit.*;
+import static org.junit.Assert.*;
 public class Abstraction extends Expression {
+	public static class AbstractionTestUnit {
+		@Test
+		public void testAbstractionType() {
+			Abstraction abs=new Abstraction("x",new Number(),new Variable("x"));
+			assertEquals(new FunctionType(new Number(),new Number()),abs.getType(new Environment()));
+		}
+	}
 	public String paramName;
+	public Type paramType;
 	public Expression body;
-	public Abstraction(String paramName, Expression body) {
+	public Abstraction(String paramName,Type paramType,Expression body) {
 		super();
 		this.paramName = paramName;
+		this.paramType=paramType;
 		this.body = body;
 	}
 	@Override
@@ -32,8 +43,9 @@ public class Abstraction extends Expression {
 	}
 	@Override
 	public Type getType(Environment e) {
-		// TODO Auto-generated method stub
-		return null;
+		Environment c=e.clone();
+		c.env.put(paramName,paramType);
+		return new FunctionType(paramType,body.getType(c));
 	}
 	@Override
 	public boolean isFunction() {

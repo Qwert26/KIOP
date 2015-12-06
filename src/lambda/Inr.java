@@ -38,4 +38,14 @@ public class Inr extends Expression {
 		if (!sumType.right.equals(t)) throw new RuntimeException("blabla");
 		return sumType;
 	}
+	@Override
+	public boolean isFunction() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isExpressionConstant() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

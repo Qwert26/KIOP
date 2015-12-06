@@ -1,67 +1,6 @@
 package lambda;
-<<<<<<< HEAD
 import java.util.Set;
-public class Case extends Expression {
-	public Case(Expression sumExpression, SumType sumType,
-			Variable inlVariable, Expression inlExpression,
-			Variable inrVariable, Expression inrExpression) {
-		super();
-		this.sumExpression = sumExpression;
-		this.sumType = sumType;
-		this.inlVariable = inlVariable;
-		this.inlExpression = inlExpression;
-		this.inrVariable = inrVariable;
-		this.inrExpression = inrExpression;
-	}
-	@Override
-	public Expression reduce() {
-		throw new RuntimeException("not yet implemented");
-	}
-	public Expression reduceWith(Expression appliedParameter) {
-		throw new RuntimeException("not yet implemented");
-	}	
-	public Set<String> FI() {
-		throw new RuntimeException("not yet implemented");
-	}
-	@Override
-	public Expression substituteWith(String aName, Expression exp) {
-		throw new RuntimeException("not yet implemented");
-	}
-	@Override
-	public boolean isReducible() {
-		return false;
-	}
-	/**
-	 *          E, inlVar: T1 |- inlExpression: T   
-	 *          E, inrVar: T2 |- inrExpression: T
-	 * T-Abs =====================================================================
-	 * 		        E |- case sumExpression
-	 *                      inl (T1+T2) inlVar => inlExpression
-	 *                      inr (T1+T2) inrVariable => inrExpression : T
-	 *
-	 */
-	public Expression sumExpression;
-	public SumType sumType;
-	public Variable inlVariable;
-	public Expression inlExpression;
-	public Variable inrVariable;
-	public Expression inrExpression;
-	@Override
-	public Type getType(Environment e) {
-		Environment envLeft = e.clone();
-		envLeft.env.put(inlVariable.varName, sumType.left);
-		Type tLeft= inlExpression.getType(envLeft);
-		
-		Environment envRight = e.clone();
-		envRight.env.put(inrVariable.varName, sumType.right);
-		Type tRight= inrExpression.getType(envRight);
-		
-		if(!tLeft.equals(tRight)) new RuntimeException("blabla");
-		
-		return tRight;
-=======
 import java.util.Objects;
-import java.util.Set;
 import org.junit.*;
 import static org.junit.Assert.*;
 public class Case extends Expression {
@@ -111,11 +50,11 @@ public class Case extends Expression {
 	@Override
 	public Type getType(Environment e) {
 		Environment eLeft=e.clone();
-		eLeft.env.put(varLeft.varName,sumType.typeLeft);
+		eLeft.env.put(varLeft.varName,sumType.left);
 		Type left=expLeft.getType(eLeft);
 		
 		Environment eRight=e.clone();
-		eRight.env.put(varLeft.varName,sumType.typeLeft);
+		eRight.env.put(varLeft.varName,sumType.right);
 		Type right=expLeft.getType(eRight);
 		
 		if(Objects.equals(left,right)) {
@@ -130,6 +69,5 @@ public class Case extends Expression {
 	@Override
 	public boolean isExpressionConstant() {
 		throw new NoSuchMethodError();
->>>>>>> origin/work
 	}
 }

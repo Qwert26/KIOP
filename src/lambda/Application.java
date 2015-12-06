@@ -50,7 +50,7 @@ public class Application extends Expression {
 		return
 			left instanceof Abstraction ||
 			left.isReducible() 
-			||left.isExpressionConstant()&&left.isFunction()
+			//||left.isExpressionConstant()&&left.isFunction()
 			;
 	}
 	@Override

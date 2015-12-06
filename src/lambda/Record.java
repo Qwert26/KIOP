@@ -15,6 +15,11 @@ public class Record extends Expression {
 	}
 	@Override
 	public Expression substituteWith(String aName,Expression exp) {
+		for(Entry<String,Expression>entry:contents.entrySet()) {
+			if((name+PROJECTION_OPERATOR+entry.getKey()).equals(aName)) {
+				return exp;
+			}
+		}
 		return null;
 	}
 	@Override
@@ -55,12 +60,11 @@ public class Record extends Expression {
 					}
 				}
 			}
+			if(resolves==contents.size()) {
+				return eClone.env.get(name);
+			}
 		} while(lastPassSucessful);
-		if(resolves==contents.size()) {
-			return eClone.env.get(name);
-		} else {
-			throw new RuntimeException("Konnte von "+(contents.size()-resolves)+" Einträgen den Typ nicht bestimmen!");
-		}
+		throw new RuntimeException("Konnte von "+(contents.size()-resolves)+" Einträgen den Typ nicht bestimmen!");
 	}
 	@Override
 	public boolean isFunction() {

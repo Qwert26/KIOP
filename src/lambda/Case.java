@@ -33,7 +33,12 @@ public class Case extends Expression {
 	}
 	@Override
 	public Expression reduce() {
-		throw new NoSuchMethodError();
+		if(sumExpression.isReducible()) {
+			sumExpression=sumExpression.reduce();
+			return this;
+		} else {
+			return null;
+		}
 	}
 	@Override
 	public Expression substituteWith(String aName,Expression exp) {

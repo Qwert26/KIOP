@@ -2,6 +2,9 @@ package lambda;
 import java.util.*;
 import java.util.Map.Entry;
 public class Record extends Expression {
+	public static class RecordTestUnit {
+		
+	}
 	public Map<String,Expression> contents;
 	public String name;
 	public Record(String name) {

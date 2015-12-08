@@ -43,4 +43,13 @@ public class FunctionType extends Type {
 		}
 		return true;
 	}
+	@Override
+	public boolean isSubtypeOf(Type other) {
+		if(other instanceof FunctionType) {
+			FunctionType ft=(FunctionType) other;
+			return right.isSubtypeOf(ft.right)&ft.left.isSubtypeOf(left);
+		} else {
+			return false;
+		}
+	}
 }

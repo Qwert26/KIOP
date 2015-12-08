@@ -1,5 +1,6 @@
 package lambda;
 import java.util.*;
+import java.util.Map.Entry;
 public class RecordType extends Type {
 	public Map<String,Type> elements;
 	public RecordType() {
@@ -32,5 +33,23 @@ public class RecordType extends Type {
 			return false;
 		}
 		return true;
+	}
+	@Override
+	public boolean isSubtypeOf(Type other) {
+		if (other instanceof RecordType) {
+			RecordType rec=(RecordType)other;
+			for (Entry<String,Type>entry:rec.elements.entrySet()) {
+				if(elements.containsKey(entry.getKey())) {
+					if(!elements.get(entry.getKey()).isSubtypeOf(entry.getValue())) {
+						return false;
+					}
+				} else {
+					return false;
+				}
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

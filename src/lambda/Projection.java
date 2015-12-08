@@ -1,9 +1,24 @@
 package lambda;
 import java.util.Set;
-public class Projection extends Expression{
+import org.junit.*;
+import static org.junit.Assert.*;
+public class Projection extends Expression {
+	public static class ProjectionTestUnit {
+		@Test
+		public void testProjectionType() {
+			Record r=new Record(null);
+			r.contents.put("x",new Variable("1"));
+			r.contents.put("y",new Variable("true"));
+			Projection p=new Projection(r,"x");
+			assertEquals(new Number(),p.getType(new Environment()));
+		}
+	}
 	public Expression target;
 	public String label;
-	public Projection() {}
+	public Projection(Expression target,String label) {
+		this.target=target;
+		this.label=label;
+	}
 	@Override
 	public Expression reduce() {
 		if(target.isReducible()) {

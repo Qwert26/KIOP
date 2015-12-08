@@ -3,5 +3,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
-@SuiteClasses(value={If.IfTestUnit.class,Variable.VariableTestUnit.class,Application.ApplicationTestUnit.class,Case.CaseTestUnit.class})
-public class Tests {}
+@SuiteClasses(value={If.IfTestUnit.class,
+					Variable.VariableTestUnit.class,
+					Application.ApplicationTestUnit.class,
+					Case.CaseTestUnit.class,
+					Projection.ProjectionTestUnit.class,
+					Record.RecordTestUnit.class})
+public class Tests {
+	public static If IF(Expression condition,Expression then,Expression notThen) {
+		return new If(condition,then,notThen);
+	}
+}

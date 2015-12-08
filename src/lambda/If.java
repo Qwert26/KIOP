@@ -95,7 +95,10 @@ public class If extends Expression {
 	}
 	@Override
 	public Expression substituteWith(String aName, Expression exp) {
-		return null;
+		conditionExpression=conditionExpression.substituteWith(aName, exp);
+		thenExpression=thenExpression.substituteWith(aName, exp);
+		elseExpression=elseExpression.substituteWith(aName, exp);
+		return this;
 	}
 	@Override
 	public boolean isReducible() {

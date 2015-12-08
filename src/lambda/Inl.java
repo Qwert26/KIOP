@@ -9,8 +9,10 @@ public class Inl extends Expression {
 	}
 	@Override
 	public Expression reduce() {
-		// TODO Auto-generated method stub
-		return null;
+		if(body.isReducible()) {
+			body=body.reduce();
+		}
+		return this;
 	}
 	@Override
 	public Expression substituteWith(String aName, Expression exp) {
@@ -19,8 +21,7 @@ public class Inl extends Expression {
 	}
 	@Override
 	public boolean isReducible() {
-		// TODO Auto-generated method stub
-		return false;
+		return body.isReducible();
 	}
 	@Override
 	public Set<String> FI() {

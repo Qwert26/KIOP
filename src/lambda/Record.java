@@ -2,7 +2,6 @@ package lambda;
 import java.util.*;
 import java.util.Map.Entry;
 public class Record extends Expression {
-	public static final String PROJECTION_OPERATOR=".";
 	public Map<String,Expression> contents;
 	public String name;
 	public Record(String name) {
@@ -10,20 +9,26 @@ public class Record extends Expression {
 		contents=new HashMap<String,Expression>();
 	}
 	@Override
-	public Expression reduce() {
+	public Record reduce() {
+		for(String label:contents.keySet()) {
+			if(contents.get(label).isReducible()) {
+				contents.put(label,contents.get(label).reduce());
+				return this;
+			}
+		}
 		return this;
 	}
 	@Override
 	public Expression substituteWith(String aName,Expression exp) {
-		for(Entry<String,Expression>entry:contents.entrySet()) {
-			if((name+PROJECTION_OPERATOR+entry.getKey()).equals(aName)) {
-				return exp;
-			}
-		}
 		return null;
 	}
 	@Override
 	public boolean isReducible() {
+		for(Expression exp:contents.values()) {
+			if(exp.isReducible()) {
+				return true;
+			}
+		}
 		return false;
 	}
 	@Override
@@ -32,39 +37,11 @@ public class Record extends Expression {
 	}
 	@Override
 	public Type getType(Environment e) {
-		Environment eClone=e.clone();
-		eClone.env.put(name,new RecordType());
-		int resolves=0;
-		//Der letzte Durchlauf hat mindestens einen weiteren Typen bestimmen können.
-		boolean lastPassSucessful;
-		if(contents.containsKey(null)) {
-			throw new RuntimeException("mögliche Expression ohne Label!");
+		RecordType type=new RecordType();
+		for(Entry<String,Expression> entry:contents.entrySet()) {
+			type.elements.put(entry.getKey(),entry.getValue().getType(e));
 		}
-		do {
-			lastPassSucessful=false;
-			for (Entry<String,Expression>entry:contents.entrySet()) {
-				if(entry.getValue()==null) {
-					throw new RuntimeException("Label "+entry.getKey()+" ohne Expression!");
-				} else {
-					if(eClone.env.containsKey(entry.getKey())) {
-						continue;
-					} else {
-						try {
-							Type t=entry.getValue().getType(eClone);
-							eClone.env.put(name+PROJECTION_OPERATOR+entry.getKey(),t);
-							resolves++;
-							lastPassSucessful=true;
-						} catch(RuntimeException re){
-							//Nicht in der Lage gewesen den Typen zu bestimmen, vielleicht beim nächsten Durchlauf.
-						}
-					}
-				}
-			}
-			if(resolves==contents.size()) {
-				return eClone.env.get(name);
-			}
-		} while(lastPassSucessful);
-		throw new RuntimeException("Konnte von "+(contents.size()-resolves)+" Einträgen den Typ nicht bestimmen!");
+		return type;
 	}
 	@Override
 	public boolean isFunction() {

@@ -37,7 +37,10 @@ public class Case extends Expression {
 	}
 	@Override
 	public Expression substituteWith(String aName,Expression exp) {
-		throw new NoSuchMethodError();
+		sumExpression=sumExpression.substituteWith(aName, exp);
+		expLeft=expLeft.substituteWith(aName, exp);
+		expRight=expRight.substituteWith(aName, exp);
+		return this;
 	}
 	@Override
 	public boolean isReducible() {

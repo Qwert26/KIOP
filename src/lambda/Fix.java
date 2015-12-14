@@ -39,6 +39,6 @@ public class Fix extends Expression {
 	}
 	@Override
 	public boolean isExpressionConstant() {
-		return false;
+		return true;
 	}
 }

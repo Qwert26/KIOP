@@ -26,9 +26,14 @@ public class Fix extends Expression {
 	}
 	@Override
 	public Type getType(Environment e) {
-		Type ret= body.getType(e);
-		if(ret instanceof FunctionType) {
-			return ret;
+		Type t=body.getType(e);
+		if(t instanceof FunctionType) {
+			FunctionType outerFunction=(FunctionType)t;
+			if(outerFunction.left instanceof FunctionType&&outerFunction.left.equals(outerFunction.right)) {
+				return outerFunction.left;
+			} else {
+				throw new RuntimeException("Something is wrong with the inner Functiontypes!");
+			}
 		} else {
 			throw new RuntimeException("Type of body is not a Function!");
 		}

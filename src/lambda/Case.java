@@ -1,5 +1,4 @@
 package lambda;
-import java.util.HashSet;
 import java.util.Set;
 public class Case extends Expression {
 	public Case(Expression sumExpression, SumType sumType,
@@ -13,7 +12,6 @@ public class Case extends Expression {
 		this.inrVariable = inrVariable;
 		this.inrExpression = inrExpression;
 	}
-
 	@Override
 	/*
 	 *               t1 -> t1'
@@ -35,29 +33,22 @@ public class Case extends Expression {
 	 * 
 	 */
 	public Expression reduce() {
-		
-		
 		throw new RuntimeException("not yet implemented");
 	}
-	
 	public Expression reduceWith(Expression appliedParameter) {
 		throw new RuntimeException("not yet implemented");
 	}	
-	
-	public Set FI() {
+	public Set<String> FI() {
 		throw new RuntimeException("not yet implemented");
 	}
-
 	@Override
 	public Expression substituteWith(String aName, Expression exp) {
 		throw new RuntimeException("not yet implemented");
 	}
-
 	@Override
 	public boolean isReducible() {
 		return false;
 	}
-
 	/**
 	 *          E, inlVar: T1 |- inlExpression: T   
 	 *          E, inrVar: T2 |- inrExpression: T
@@ -68,7 +59,6 @@ public class Case extends Expression {
 	 *
 	 */
 	public Expression sumExpression;
-
 	public SumType sumType;
 	public Variable inlVariable;
 	public Expression inlExpression;
@@ -79,13 +69,10 @@ public class Case extends Expression {
 		Environment envLeft = e.clone();
 		envLeft.env.put(inlVariable.varName, sumType.left);
 		Type tLeft= inlExpression.getType(envLeft);
-		
 		Environment envRight = e.clone();
 		envRight.env.put(inrVariable.varName, sumType.right);
 		Type tRight= inrExpression.getType(envRight);
-		
 		if(!tLeft.equals(tRight)) new RuntimeException("blabla");
-		
 		return tRight;
 	}
 }

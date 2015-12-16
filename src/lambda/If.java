@@ -4,7 +4,6 @@ public class If extends Expression {
 	public Expression conditionExpression;
 	public Expression thenExpression;
 	public Expression elseExpression;
-	
 	public If(Expression conditionExpression, Expression thenExpression,
 			Expression elseExpression) {
 		super();
@@ -12,19 +11,15 @@ public class If extends Expression {
 		this.thenExpression = thenExpression;
 		this.elseExpression = elseExpression;
 	}
-
 	/*              t -> t'
 	 * ---------------------------------------------
 	 * if t then t2 else t3 -> if t' then t2 else t3  
 	 */
-
 	public Expression reduce() {
-		
 		if (conditionExpression.isReducible()) {
 			conditionExpression = conditionExpression.reduce();
 			return this;
 		}
-		
 		// E-ifTrue
 		if (((Variable) conditionExpression).varName.equals("true")) {
 			return new Inl(
@@ -33,7 +28,6 @@ public class If extends Expression {
 						elseExpression.getType(Environment.createEnvironment())
 					), thenExpression);
 		}
-
 		if (((Variable) conditionExpression).varName.equals("false")) {
 			return new Inr(
 					new SumType(
@@ -41,11 +35,8 @@ public class If extends Expression {
 						elseExpression.getType(Environment.createEnvironment())
 					), elseExpression);
 		}
-		
 		throw new RuntimeException("Condition der If-Bedingung hat sich nicht richtig reduziert -- weder true noch false");
 	}
-
-	
 	public Expression substituteWith(String aName, Expression exp) {
 		conditionExpression = conditionExpression.substituteWith(aName, exp);
 		thenExpression = thenExpression.substituteWith(aName, exp);
@@ -53,34 +44,27 @@ public class If extends Expression {
 		
 		return this;
 	}
-
 	@Override
 	public boolean isReducible() {
 		return true;
 	}
-
 	@Override
-	public Set FI() {
+	public Set<String> FI() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	/*
 	 * 
 	 *        E |- v:Bool   E|- t1: T1   E|-t2:T2
 	 * T-If ===========================================
 	 *        E |- if v then t1 t else t2: T1+T2
 	 */
-	
 	@Override
 	public Type getType(Environment e) {
 		Type conditionType = conditionExpression.getType(e);
 		Type thenType = thenExpression.getType(e);
 		Type elseType = elseExpression.getType(e);
-		
 		if (!new Boolean().equals(conditionType)) throw new RuntimeException("Geh wech");
-		
 		return new SumType(thenType, elseType);
 	}
-
 }

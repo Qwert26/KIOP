@@ -5,13 +5,8 @@ import java.util.Set;
   zB { x = 12}, {x = + 1 1, y= AND true false} 
  */
 public class Record extends Expression {
-
 	HashMap<String, Expression> elements = new HashMap<String, Expression>();
-
-	
-	public Record() {
-	}
-
+	public Record() {}
 	/**
 	 *                   ti -> ti'
 	 *     ===================================================
@@ -27,12 +22,10 @@ public class Record extends Expression {
 		}
 		return this;
 	}
-
 	@Override
 	public Expression substituteWith(String aName, Expression exp) {
 		throw new RuntimeException("not yet implemented");
 	}
-
 	@Override
 	public boolean isReducible() {
 		for (String label : elements.keySet()) {
@@ -43,13 +36,11 @@ public class Record extends Expression {
 		}
 		return false;
 	}
-
 	@Override
-	public Set FI() {
+	public Set<String> FI() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	/**
 	 *                   E |- ti: Ti
 	 *     =================================================
@@ -58,14 +49,11 @@ public class Record extends Expression {
 	@Override
 	public RecordType getType(Environment e) {
 		RecordType type = new RecordType();
-		
 		for (String label : elements.keySet()) {
 			Expression ti = elements.get(label);
 			Type t = ti.getType(e);
 			type.elements.put(label, t);
 		}
-
 		return type;
 	}
-
 }

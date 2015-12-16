@@ -1,6 +1,6 @@
 package lambda;
 import java.util.HashMap;
-public class Environment {
+public class Environment implements Cloneable {
 	public HashMap<String, Type> env = new HashMap<String, Type>();
 	public static Environment createEnvironment() {
 		Environment e = new Environment();
@@ -13,7 +13,6 @@ public class Environment {
 		e.env.put("largerThan0", new FunctionType(new  Number(),new  Boolean()));
 		return e;
 	}
-	@Override
 	public Environment clone() {
 		Environment e = new Environment();
 		@SuppressWarnings("unchecked")

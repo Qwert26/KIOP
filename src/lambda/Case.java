@@ -1,4 +1,5 @@
 package lambda;
+import java.util.HashSet;
 import java.util.Set;
 public class Case extends Expression {
 	public Case(Expression sumExpression, SumType sumType,
@@ -12,24 +13,51 @@ public class Case extends Expression {
 		this.inrVariable = inrVariable;
 		this.inrExpression = inrExpression;
 	}
+
 	@Override
+	/*
+	 *               t1 -> t1'
+	 * =================================================================
+	 * case t1                           case t1'  
+	 *   inl(T) y => t2 |     ->           inl(T) y => t2 |     ->  
+	 *   inr(T) z => t3                    inr(T) z => t3
+	 * 
+	 * 
+	 * 
+	 * 
+	 * case inl(T) t1                      
+	 *   inl(T) y => t2 |     ->           [y := t1] t2 
+	 *   inr(T) z => t3
+	 *   
+	 * case inr(T) t1                      
+	 *   inl(T) y => t2 |     ->           [z := t1] t3 
+	 *   inr(T) z => t3                    
+	 * 
+	 */
 	public Expression reduce() {
+		
+		
 		throw new RuntimeException("not yet implemented");
 	}
+	
 	public Expression reduceWith(Expression appliedParameter) {
 		throw new RuntimeException("not yet implemented");
 	}	
-	public Set<String> FI() {
+	
+	public Set FI() {
 		throw new RuntimeException("not yet implemented");
 	}
+
 	@Override
 	public Expression substituteWith(String aName, Expression exp) {
 		throw new RuntimeException("not yet implemented");
 	}
+
 	@Override
 	public boolean isReducible() {
 		return false;
 	}
+
 	/**
 	 *          E, inlVar: T1 |- inlExpression: T   
 	 *          E, inrVar: T2 |- inrExpression: T
@@ -40,6 +68,7 @@ public class Case extends Expression {
 	 *
 	 */
 	public Expression sumExpression;
+
 	public SumType sumType;
 	public Variable inlVariable;
 	public Expression inlExpression;

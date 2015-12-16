@@ -3,34 +3,45 @@ import java.util.Set;
 public class Application extends Expression {
 	Expression left;
 	Expression right;
+	
 	public Application(Expression left, Expression right) {
 		super();
 		this.left = left;
 		this.right = right;
 	}
+
 	@Override
 	public Expression reduce() {
 		if (left.isReducible()) {
 			left = left.reduce();
 			return this;
 		}
+		
 		if (left instanceof Abstraction) {
 			return ((Abstraction) left).reduceWith(right);
 		}
+		
 		return this;
 	}
+
 	@Override
+	/*
+	 * [x=t'] t1 t2 = [x=t'] t1 [x=t'] t2
+	 * 
+	 */
 	public Expression substituteWith(String aName, Expression exp) {
 		left = left.substituteWith(aName, exp);
 		right = right.substituteWith(aName, exp);
 		return this;
 	}
+
 	@Override
-	public Set<String> FI() {
-		Set<String> s = left.FI();
+	public Set FI() {
+		Set s = left.FI();
 		s.addAll(right.FI());
 		return s;
 	}
+
 	@Override
 	public boolean isReducible() {
 		return
@@ -40,6 +51,7 @@ public class Application extends Expression {
 //			|| left.isExpressionConstant() && left.isFunction()
 			;
 	}
+
 	@Override
 	public Type getType(Environment e) {
 		if (left.getType(e) instanceof FunctionType) {
@@ -50,6 +62,7 @@ public class Application extends Expression {
 				return f.right;
 			}
 		}
+		
 		return null;
 	}
 }

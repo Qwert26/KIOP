@@ -7,11 +7,13 @@ public class FunctionType extends Type {
 		this.left = left;
 		this.right = right;
 	}
+	
 	public String toString() {
 //		System.out.println(left);
 //		System.out.println(right);
 		return left.toString() + " -> " + right.toString();
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -20,6 +22,7 @@ public class FunctionType extends Type {
 		result = prime * result + ((right == null) ? 0 : right.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -40,5 +43,15 @@ public class FunctionType extends Type {
 		} else if (!right.equals(other.right))
 			return false;
 		return true;
+	}
+	
+	public boolean isSubtypeOf(Type T) {
+		if (!super.isSubtypeOf(T)) return false;
+		
+		FunctionType superTypeFuncType = (FunctionType) T;
+		
+		return this.right.isSubtypeOf(superTypeFuncType.right) &&
+				superTypeFuncType.left.isSubtypeOf(this.left);
+		
 	}
 }

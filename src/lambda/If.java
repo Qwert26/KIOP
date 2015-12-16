@@ -4,6 +4,7 @@ public class If extends Expression {
 	public Expression conditionExpression;
 	public Expression thenExpression;
 	public Expression elseExpression;
+	
 	public If(Expression conditionExpression, Expression thenExpression,
 			Expression elseExpression) {
 		super();
@@ -11,13 +12,19 @@ public class If extends Expression {
 		this.thenExpression = thenExpression;
 		this.elseExpression = elseExpression;
 	}
-	@Override
+
+	/*              t -> t'
+	 * ---------------------------------------------
+	 * if t then t2 else t3 -> if t' then t2 else t3  
+	 */
+
 	public Expression reduce() {
 		
 		if (conditionExpression.isReducible()) {
 			conditionExpression = conditionExpression.reduce();
 			return this;
 		}
+		
 		// E-ifTrue
 		if (((Variable) conditionExpression).varName.equals("true")) {
 			return new Inl(
@@ -26,6 +33,7 @@ public class If extends Expression {
 						elseExpression.getType(Environment.createEnvironment())
 					), thenExpression);
 		}
+
 		if (((Variable) conditionExpression).varName.equals("false")) {
 			return new Inr(
 					new SumType(
@@ -33,22 +41,30 @@ public class If extends Expression {
 						elseExpression.getType(Environment.createEnvironment())
 					), elseExpression);
 		}
+		
 		throw new RuntimeException("Condition der If-Bedingung hat sich nicht richtig reduziert -- weder true noch false");
 	}
-	@Override
+
+	
 	public Expression substituteWith(String aName, Expression exp) {
-		// TODO Auto-generated method stub
-		return null;
+		conditionExpression = conditionExpression.substituteWith(aName, exp);
+		thenExpression = thenExpression.substituteWith(aName, exp);
+		elseExpression = elseExpression.substituteWith(aName, exp);
+		
+		return this;
 	}
+
 	@Override
 	public boolean isReducible() {
 		return true;
 	}
+
 	@Override
-	public Set<String> FI() {
+	public Set FI() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	/*
 	 * 
 	 *        E |- v:Bool   E|- t1: T1   E|-t2:T2
@@ -66,4 +82,5 @@ public class If extends Expression {
 		
 		return new SumType(thenType, elseType);
 	}
+
 }

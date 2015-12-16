@@ -1,6 +1,7 @@
 package lambda;
-import junit.framework.TestCase;
-public class Tests extends TestCase {
+import org.junit.*;
+import static org.junit.Assert.*;
+public class Tests {
 	public Application APP(Expression left, Expression right) {
 		return new Application(left, right);
 	}
@@ -16,6 +17,7 @@ public class Tests extends TestCase {
 		exp.elements.put("y", new Variable("true"));
 		return exp;
 	}
+	@Test
 	public void test_recSubType() {
 		RecordType recT1 = new RecordType();
 		recT1.elements.put("x", new Number());
@@ -23,6 +25,7 @@ public class Tests extends TestCase {
 		recT2.elements.put("x", new Number());
 		assertTrue(recT2.isSubtypeOf(recT1));
 	}
+	@Test
 	public void test_proj01() {
 		Environment e = Environment.createEnvironment();
 		Projection p = new Projection(simpleRecord(), "x");
@@ -34,6 +37,7 @@ public class Tests extends TestCase {
 		Expression ex = p.reduce();
 		assertEquals(new Variable("1"), ex);
 	}
+	@Test
 	public void test_recordReduce02() {
 		// { x = 1, y = (λx:Num.(λy:Num.y) x) 1}
 		Record rec = new Record();
@@ -52,7 +56,8 @@ public class Tests extends TestCase {
 		assertTrue(rec.isReducible());
 		rec = rec.reduce();
 		assertEquals(new Variable("1"), rec.elements.get("y"));
-	}	
+	}
+	@Test
 	public void test_recordReduce01() {
 		// { x = 1, y = (λx:Num.x) 1}
 		Record rec = new Record();
@@ -64,6 +69,7 @@ public class Tests extends TestCase {
 		assertFalse(rec.isReducible());
 		assertEquals(new Variable("1"), rec.elements.get("y"));
 	}
+	@Test
 	public void test_recordType03() {
 		Environment e = Environment.createEnvironment();
 		RecordType type = new RecordType();
@@ -74,7 +80,8 @@ public class Tests extends TestCase {
 		exp.elements.put("y", new Variable("true"));
 		RecordType resultType = exp.getType(e);
 		assertTrue(!type.equals(resultType));
-	}	
+	}
+	@Test
 	public void test_recordType02() {
 		Environment e = Environment.createEnvironment();
 		Record exp = new Record();
@@ -86,6 +93,7 @@ public class Tests extends TestCase {
 		RecordType resultType = exp.getType(e);
 		assertEquals(type, resultType);
 	}
+	@Test
 	public void test_recordType01() {
 		Environment e = Environment.createEnvironment();
 		Record exp = new Record();
@@ -94,8 +102,8 @@ public class Tests extends TestCase {
 		RecordType type = exp.getType(e);
 		assertEquals(new Number(), type.elements.get("x"));
 		assertEquals(new Boolean(), type.elements.get("y"));
-		
 	}
+	@Test
 	public void test_typeOfSumTypeApp() {
 		Environment e = Environment.createEnvironment();
 		Case c = new Case(new Variable("x"), new SumType(new Number(),
@@ -113,6 +121,7 @@ public class Tests extends TestCase {
 		Type t2 = app2.getType(e);
 		assertEquals(new Boolean(), t2);
 	}
+	@Test
 	public void test_typeOfCase() {
 		Environment e = Environment.createEnvironment();
 		e.env.put("x", new SumType(new Number(), new Boolean()));
@@ -122,6 +131,7 @@ public class Tests extends TestCase {
 		Type t = c.getType(e);
 		assertEquals(new Boolean(), t);
 	}
+	@Test
 	public void test_typeOfIfSumType() {
 		Environment e = Environment.createEnvironment();
 		If ifExpr = new If(new Variable("true"), new Variable("1"),
@@ -131,6 +141,7 @@ public class Tests extends TestCase {
 		SumType sT = new SumType(new Number(), new Boolean());
 		assertEquals(sT, type);
 	}
+	@Test
 	public void test_typeOfAbstraction() {
 		Environment e = Environment.createEnvironment();
 		Abstraction abst = ABS("x", new Number(), VAR("x"));
@@ -138,6 +149,7 @@ public class Tests extends TestCase {
 		FunctionType fT = new FunctionType(new Number(), new Number());
 		assertEquals(fT, abst.getType(e));
 	}
+	@Test
 	public void test_IfEval() {
 		If ifExpr = new If(new Variable("true"), new Variable("true"),
 				new Variable("false"));
@@ -152,6 +164,7 @@ public class Tests extends TestCase {
 		Variable v2 = (Variable) inr.body;
 		assertEquals("false", v2.varName);
 	}
+	@Test
 	public void test_IfTyped() {
 		Environment e = Environment.createEnvironment();
 		// if (true) then true else true
@@ -185,6 +198,7 @@ public class Tests extends TestCase {
 		assertEquals(new SumType(new Number(), new Number()),
 				ifExpr6.getType(e));
 	}
+	@Test
 	public void test_TypedExpression() {
 		Environment e = Environment.createEnvironment();
 		Variable v = new Variable("true");

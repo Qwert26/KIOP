@@ -1,4 +1,5 @@
 package lambda;
+import java.util.Set;
 public class Anwendung extends Ausdruck {
 	/**
 	 * Der Ausdruck, in dem etwas angewendet werden soll.
@@ -17,5 +18,11 @@ public class Anwendung extends Ausdruck {
 	}
 	public synchronized final Ausdruck getAnwender() {
 		return anwender;
+	}
+	@Override
+	public Set<String> freieVariablen() {
+		Set<String> ret=anwender.freieVariablen();
+		ret.retainAll(anwendung.freieVariablen());
+		return ret;
 	}
 }

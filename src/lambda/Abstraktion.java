@@ -1,4 +1,5 @@
 package lambda;
+import java.util.*;
 public class Abstraktion extends Ausdruck {
 	/**
 	 * Der Name der Variablen.
@@ -17,5 +18,11 @@ public class Abstraktion extends Ausdruck {
 	}
 	public synchronized final Ausdruck getTerm() {
 		return term;
+	}
+	@Override
+	public Set<String> freieVariablen() {
+		Set<String> ret=term.freieVariablen();
+		ret.remove(name);
+		return ret;
 	}
 }

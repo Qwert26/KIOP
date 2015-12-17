@@ -5,4 +5,5 @@ public abstract class Ausdruck {
 		super();
 	}
 	public abstract Set<String> freieVariablen();
+	public abstract Ausdruck substitution(String name,Ausdruck ersatz);
 }

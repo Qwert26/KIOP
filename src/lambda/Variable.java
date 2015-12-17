@@ -17,4 +17,12 @@ public class Variable extends Ausdruck {
 		ret.add(name);
 		return ret;
 	}
+	@Override
+	public Ausdruck substitution(String name, Ausdruck ersatz) {
+		if(this.name.equals(name)) {
+			return ersatz;
+		} else {
+			return this;
+		}
+	}
 }

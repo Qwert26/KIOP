@@ -25,4 +25,11 @@ public class Abstraktion extends Ausdruck {
 		ret.remove(name);
 		return ret;
 	}
+	@Override
+	public Ausdruck substitution(String name, Ausdruck ersatz) {
+		if(!freieVariablen().contains(name)) {
+			term=term.substitution(name,ersatz);
+		}
+		return this;
+	}
 }

@@ -25,4 +25,10 @@ public class Anwendung extends Ausdruck {
 		ret.retainAll(anwendung.freieVariablen());
 		return ret;
 	}
+	@Override
+	public Ausdruck substitution(String name, Ausdruck ersatz) {
+		anwender=anwender.substitution(name, ersatz);
+		anwendung=anwendung.substitution(name, ersatz);
+		return this;
+	}
 }

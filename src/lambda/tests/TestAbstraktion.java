@@ -7,13 +7,29 @@ public class TestAbstraktion {
 	@Test
 	public void testFreieVariablenLeer() {
 		final String name="x";
-		Abstraktion a=abs(name,var(name));
+		Abstraktion a=ABS(name,VAR(name));
 		assertTrue("Menge der freien Variablen ist nicht leer!",a.freieVariablen().isEmpty());
 	}
 	@Test
 	public void testFreieVariablenVorhanden() {
 		final String name="x";
-		Abstraktion a=abs("y",var(name));
+		Abstraktion a=ABS("y",VAR(name));
 		assertTrue("x ist keine freie Variable, sollte aber eine sein!",a.freieVariablen().contains(name));
+	}
+	@Test
+	public void testSubstitutionSuccess() {
+		final String name="x";
+		Variable original=VAR(name),ersatz=VAR("y");
+		Abstraktion abs=ABS("z",original);
+		abs.substitution(name,ersatz);
+		assertEquals("Der Term wurde nicht ersetzt!",ersatz,abs.getTerm());
+	}
+	@Test
+	public void testSubstitutionFailure() {
+		final String name="x";
+		Variable original=VAR(name),ersatz=VAR("y");
+		Abstraktion abs=ABS("z",original);
+		abs.substitution("z",ersatz);
+		assertEquals("Der Term wurde ersetzt!",original,abs.getTerm());
 	}
 }

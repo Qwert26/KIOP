@@ -27,4 +27,8 @@ public abstract class Ausdruck {
 	 * @return
 	 */
 	public abstract Ausdruck reduziere();
+	@Override
+	public abstract int hashCode();
+	@Override
+	public abstract boolean equals(Object o);
 }

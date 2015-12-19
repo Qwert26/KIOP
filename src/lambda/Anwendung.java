@@ -47,4 +47,51 @@ public class Anwendung extends Ausdruck {
 			return this;
 		}
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((anwender == null) ? 0 : anwender.hashCode());
+		result = prime * result + ((anwendung == null) ? 0 : anwendung.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Anwendung)) {
+			return false;
+		}
+		Anwendung other = (Anwendung) obj;
+		if (anwender == null) {
+			if (other.anwender != null) {
+				return false;
+			}
+		} else if (!anwender.equals(other.anwender)) {
+			return false;
+		}
+		if (anwendung == null) {
+			if (other.anwendung != null) {
+				return false;
+			}
+		} else if (!anwendung.equals(other.anwendung)) {
+			return false;
+		}
+		return true;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Anwendung [");
+		if (anwendung != null)
+			builder.append("anwendung=").append(anwendung).append(", ");
+		if (anwender != null)
+			builder.append("anwender=").append(anwender);
+		builder.append("]");
+		return builder.toString();
+	}
 }

@@ -32,4 +32,15 @@ public class Abstraktion extends Ausdruck {
 		}
 		return this;
 	}
+	@Override
+	public boolean istReduzierbar() {
+		return term.istReduzierbar();
+	}
+	@Override
+	public Ausdruck reduziere() {
+		if(istReduzierbar()) {
+			term=term.reduziere();
+		}
+		return this;
+	}
 }

@@ -2,11 +2,11 @@ package lambda;
 import java.util.Set;
 public class Anwendung extends Ausdruck {
 	/**
-	 * Der Ausdruck, in dem etwas angewendet werden soll.
+	 * Der Ausdruck, in dem etwas angewendet werden soll. Die linke Seite.
 	 */
 	private Ausdruck anwendung;
 	/**
-	 * Der Ausdruck, der in der {@link #anwendung} angewendet werden soll.
+	 * Der Ausdruck, der in der {@link #anwendung} angewendet werden soll. Die rechte Seite.
 	 */
 	private Ausdruck anwender;
 	public Anwendung(Ausdruck anwendung,Ausdruck anwender) {
@@ -30,5 +30,21 @@ public class Anwendung extends Ausdruck {
 		anwender=anwender.substitution(name, ersatz);
 		anwendung=anwendung.substitution(name, ersatz);
 		return this;
+	}
+	@Override
+	public boolean istReduzierbar() {
+		return anwender.istReduzierbar()||anwendung instanceof Abstraktion;
+	}
+	@Override
+	public Ausdruck reduziere() {
+		if(anwender.istReduzierbar()) {
+			anwender=anwender.reduziere();
+			return this;
+		} else if (anwendung instanceof Abstraktion) {
+			anwendung=anwendung.substitution(((Abstraktion)anwendung).getName(),anwender);
+			return ((Abstraktion)anwendung).getTerm();
+		} else {
+			return this;
+		}
 	}
 }

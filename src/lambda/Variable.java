@@ -25,4 +25,20 @@ public class Variable extends Ausdruck {
 			return this;
 		}
 	}
+	/**
+	 * Variablen lassen sich nicht reduzieren.
+	 */
+	@Override
+	public boolean istReduzierbar() {
+		return false;
+	}
+	/**
+	 * Variablen geben immer sich selbst zurück.
+	 * @return
+	 * <tt>this</tt>
+	 */
+	@Override
+	public Variable reduziere() {
+		return this;
+	}
 }

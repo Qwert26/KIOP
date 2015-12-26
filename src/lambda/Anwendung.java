@@ -41,8 +41,8 @@ public class Anwendung extends Ausdruck {
 			anwender=anwender.reduziere();
 			return this;
 		} else if (anwendung instanceof Abstraktion) {
-			anwendung=anwendung.substitution(((Abstraktion)anwendung).getName(),anwender);
-			return ((Abstraktion)anwendung).getTerm();
+			Abstraktion abs=(Abstraktion)anwendung;
+			return abs.getTerm().substitution(abs.getName(),anwender);
 		} else {
 			return this;
 		}

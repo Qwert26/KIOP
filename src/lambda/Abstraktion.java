@@ -26,7 +26,7 @@ public class Abstraktion extends Ausdruck {
 		return ret;
 	}
 	@Override
-	public Ausdruck substitution(String name, Ausdruck ersatz) {
+	public Abstraktion substitution(String name, Ausdruck ersatz) {
 		if((!this.name.equals(name))&&(freieVariablen().contains(name))) {
 			term=term.substitution(name,ersatz);
 		}

@@ -21,8 +21,8 @@ public class Anwendung extends Ausdruck {
 	}
 	@Override
 	public Set<String> freieVariablen() {
-		Set<String> ret=anwender.freieVariablen();
-		ret.retainAll(anwendung.freieVariablen());
+		Set<String> ret=anwendung.freieVariablen();
+		ret.addAll(anwender.freieVariablen());
 		return ret;
 	}
 	@Override

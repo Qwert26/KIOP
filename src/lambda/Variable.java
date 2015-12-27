@@ -11,15 +11,15 @@ public class Variable extends Ausdruck {
 	public Variable(String name) {
 		this.name=name;
 	}
-	public Variable(long wert) {
-		name=wert+"";
+	public Variable(Ausdruckskonstanten ausdruck) {
 		ausdruckskonstante=true;
-		typ=new Zahl();
+		typ=ausdruck.erhalteTyp();
+		name=ausdruck.name();
 	}
-	public Variable(boolean wert) {
-		name=wert+"";
+	public Variable(long zahl) {
+		typ=new Zahl();
 		ausdruckskonstante=true;
-		typ=new Wahrheitswert();
+		name=""+zahl;
 	}
 	public synchronized final String getName() {
 		return name;

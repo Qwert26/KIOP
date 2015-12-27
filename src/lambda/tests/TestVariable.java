@@ -15,12 +15,12 @@ public class TestVariable {
 	}
 	@Test
 	public void testTypWahrheitswertTrue() {
-		Variable v=VAR(true);
+		Variable v=VAR(Ausdruckskonstanten.TRUE);
 		assertEquals(new Wahrheitswert(),v.bestimmeTyp(v.extrahiereUmgebung()));
 	}
 	@Test
 	public void testTypWahrheitswertFalse() {
-		Variable v=VAR(false);
+		Variable v=VAR(Ausdruckskonstanten.FALSE);
 		assertEquals(new Wahrheitswert(),v.bestimmeTyp(v.extrahiereUmgebung()));
 	}
 	@Test

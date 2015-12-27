@@ -1,5 +1,6 @@
 package lambda.tests;
 import lambda.*;
+import lambda.typen.*;
 final class TestHelfer {
 	private TestHelfer() {
 		super();
@@ -10,8 +11,8 @@ final class TestHelfer {
 	public static Variable VAR(long zahl) {
 		return new Variable(zahl);
 	}
-	public static Variable VAR(boolean wert) {
-		return new Variable(wert);
+	public static Variable VAR(Ausdruckskonstanten konstante) {
+		return new Variable(konstante);
 	}
 	public static Abstraktion ABS(String name,Ausdruck term) {
 		return new Abstraktion(name,term);

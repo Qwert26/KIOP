@@ -78,4 +78,17 @@ public class Variable extends Ausdruck {
 		builder.append("]");
 		return builder.toString();
 	}
+	@Override
+	public boolean umbenennen(String von,String zu) {
+		if(name.equals(von)) {
+			name=zu;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	@Override
+	public Set<String> gebundeneVariablen() {
+		return new TreeSet<String>();
+	}
 }

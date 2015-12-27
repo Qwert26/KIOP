@@ -10,6 +10,11 @@ public abstract class Ausdruck {
 	 */
 	public abstract Set<String> freieVariablen();
 	/**
+	 * @return
+	 * Die Namen der gebundenen Variablen
+	 */
+	public abstract Set<String> gebundeneVariablen();
+	/**
 	 * Führt eine Ersetzung durch, in dem Variablen, die den übergebenen Namen besitzen, sich durch den übergebenen Ausdruck ersetzen.
 	 * @param name
 	 * Was ersetzt werden soll.
@@ -27,6 +32,16 @@ public abstract class Ausdruck {
 	 * @return
 	 */
 	public abstract Ausdruck reduziere();
+	/**
+	 * Bennent Sachen um, wenn sie entsprechende Namen haben.
+	 * @param von
+	 * Was umbenannt werden soll.
+	 * @param zu
+	 * Was der neue Name sein soll.
+	 * @return
+	 * <tt>true</tt>, wenn irgendwas umbenannt wurde sonst <tt>false</tt>.
+	 */
+	public abstract boolean umbenennen(String von,String zu);
 	@Override
 	public abstract int hashCode();
 	@Override

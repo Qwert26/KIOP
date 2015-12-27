@@ -90,4 +90,19 @@ public class Abstraktion extends Ausdruck {
 		builder.append("]");
 		return builder.toString();
 	}
+	@Override
+	public boolean umbenennen(String von,String zu) {
+		boolean ret=false;
+		if(name.equals(von)) {
+			name=zu;
+			ret=true;
+		}
+		return ret|term.umbenennen(von,zu);
+	}
+	@Override
+	public Set<String> gebundeneVariablen() {
+		Set<String> ret=term.gebundeneVariablen();
+		ret.add(name);
+		return ret;
+	}
 }

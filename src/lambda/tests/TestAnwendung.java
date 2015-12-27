@@ -13,7 +13,7 @@ public class TestAnwendung {
 		Abstraktion lx=ABS("x",VAR("x"));
 		Abstraktion ly=ABS("y",VAR("y"));
 		Variable vz=VAR("z");
-		Ausdruck redex=APP(lx,APP(ly,vz));
+		Ausdruck redex=APP(lx,ly,vz);
 		while(redex.istReduzierbar()) {
 			redex=redex.reduziere();
 		}
@@ -38,14 +38,25 @@ public class TestAnwendung {
 	 */
 	@Test
 	public void testReduktion3() {
-		Abstraktion lxyz=ABS("x",ABS("y",ABS("z",APP(APP(VAR("x"),VAR("y")),VAR("z")))));
+		Abstraktion lxyz=ABS("x",ABS("y",ABS("z",APP(VAR("x"),VAR("y"),VAR("z")))));
 		Abstraktion ltf=ABS("t",ABS("f",VAR("t")));
-		Ausdruck redex=APP(APP(APP(lxyz,ltf),VAR("v")),VAR("w"));
-		System.out.println(redex);
+		Ausdruck redex=APP(lxyz,ltf,VAR("v"),VAR("w"));
 		while(redex.istReduzierbar()) {
 			redex=redex.reduziere();
-			System.out.println(redex);
 		}
 		assertEquals(VAR("v"),redex);
+	}
+	/**
+	 * Reduktion von Folie 205.
+	 */
+	@Test
+	public void testReduktionMitSubstitution() {
+		Abstraktion lxy=ABS("x",ABS("y",APP(VAR("x"),VAR("y"))));
+		Ausdruck redex=APP(lxy,VAR("y"),VAR("z"));
+		Anwendung result=APP(VAR("y"),VAR("z"));
+		while(redex.istReduzierbar()) {
+			redex=redex.reduziere();
+		}
+		assertEquals(result,redex);
 	}
 }

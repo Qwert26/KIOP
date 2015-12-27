@@ -32,4 +32,11 @@ public class TestAbstraktion {
 		abs.substitution("z",ersatz);
 		assertEquals("Der Term wurde ersetzt!",original,abs.getTerm());
 	}
+	@Test
+	public void testUmbennen() {
+		Abstraktion lxyz=ABS("x",ABS("y",ABS("z",APP(VAR("x"),VAR("y"),VAR("x")))));
+		Abstraktion result=ABS("h",ABS("y",ABS("z",APP(VAR("h"),VAR("y"),VAR("h")))));
+		assertTrue("Es wurde nichts umbenannt!",lxyz.umbenennen("x","h"));
+		assertEquals("Das Umbennen lieferte nicht das korrekte Ergebnis!",result,lxyz);
+	}
 }

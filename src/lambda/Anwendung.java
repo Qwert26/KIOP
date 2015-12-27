@@ -44,6 +44,13 @@ public class Anwendung extends Ausdruck {
 			anwendung=anwendung.reduziere();
 			return this;
 		} else if (anwendung instanceof Abstraktion) {
+			Set<String>kollisionen=anwendung.gebundeneVariablen();
+			kollisionen.retainAll(anwender.freieVariablen());
+			if(!kollisionen.isEmpty()) {
+				for(String kollider:kollisionen) {
+					anwendung.umbenennen(kollider,kollider+"'");
+				}
+			}
 			Abstraktion abs=(Abstraktion)anwendung;
 			return abs.getTerm().substitution(abs.getName(),anwender);
 		} else {
@@ -96,5 +103,15 @@ public class Anwendung extends Ausdruck {
 			builder.append("anwender=").append(anwender);
 		builder.append("]");
 		return builder.toString();
+	}
+	@Override
+	public boolean umbenennen(String von,String zu) {
+		return anwender.umbenennen(von,zu)|anwendung.umbenennen(von,zu);
+	}
+	@Override
+	public Set<String> gebundeneVariablen() {
+		Set<String> ret=anwendung.gebundeneVariablen();
+		ret.retainAll(anwender.gebundeneVariablen());
+		return ret;
 	}
 }

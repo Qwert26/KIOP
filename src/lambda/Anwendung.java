@@ -34,7 +34,7 @@ public class Anwendung extends Ausdruck {
 	}
 	@Override
 	public boolean istReduzierbar() {
-		return anwender.istReduzierbar()||anwendung.istReduzierbar()||anwendung instanceof Abstraktion;
+		return anwender.istReduzierbar()||anwendung.istReduzierbar()||anwendung.istAusdruckskonstante()||anwendung instanceof Abstraktion;
 	}
 	@Override
 	public Ausdruck reduziere() {
@@ -43,6 +43,9 @@ public class Anwendung extends Ausdruck {
 			return this;
 		} else if(anwendung.istReduzierbar()) {
 			anwendung=anwendung.reduziere();
+			return this;
+		} else if(anwendung.istAusdruckskonstante()) {
+			//TODO Wie reduziert man eine Ausdruckskonstante?
 			return this;
 		} else if (anwendung instanceof Abstraktion) {
 			Set<String>kollisionen=anwendung.gebundeneVariablen();

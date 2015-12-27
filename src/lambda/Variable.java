@@ -41,26 +41,65 @@ public class Variable extends Ausdruck {
 		}
 	}
 	/**
-	 * Variablen lassen sich nicht reduzieren.
+	 * Variablen lassen sich nicht reduzieren, es sei denn sie sind Ausdruckskonstanten, keine Zahlen oder Wahrheitswerte.
 	 */
 	@Override
 	public boolean istReduzierbar() {
-		return false;
+		if(ausdruckskonstante) {
+			Ausdruckskonstanten konstante=Ausdruckskonstanten.valueOf(name);
+			if(konstante==null) {
+				return false;
+			} else {
+				if(konstante==Ausdruckskonstanten.TRUE|konstante==Ausdruckskonstanten.FALSE) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+		} else {
+			return false;
+		}
 	}
 	/**
-	 * Variablen geben immer sich selbst zurück.
+	 * Variablen geben immer sich selbst zurück, es sei denn sie sind Ausdruckskonstanten.
 	 * @return
-	 * <tt>this</tt>
+	 * <tt>this</tt>, wenn keine Ausdruckskonstante, Zahl oder Wahrheitswert, sonst einen neuen Ausdruck.
 	 */
 	@Override
-	public Variable reduziere() {
-		return this;
+	public Ausdruck reduziere() {
+		if(ausdruckskonstante) {
+			switch(Ausdruckskonstanten.valueOf(name)) {
+			case AND:
+				return new UndAusdruck();
+			case FALSE:
+				return this;
+			case MULT:
+				break;
+			case NOT:
+				break;
+			case OR:
+				break;
+			case PLUS:
+				break;
+			case SUCC:
+				break;
+			case TRUE:
+				return this;
+			default:
+				//Es war eine Zahl.
+				return this;
+			}
+		} else {
+			return this;
+		}
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (ausdruckskonstante ? 1231 : 1237);
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((typ == null) ? 0 : typ.hashCode());
 		return result;
 	}
 	@Override
@@ -75,11 +114,21 @@ public class Variable extends Ausdruck {
 			return false;
 		}
 		Variable other = (Variable) obj;
+		if (ausdruckskonstante != other.ausdruckskonstante) {
+			return false;
+		}
 		if (name == null) {
 			if (other.name != null) {
 				return false;
 			}
 		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		if (typ == null) {
+			if (other.typ != null) {
+				return false;
+			}
+		} else if (!typ.equals(other.typ)) {
 			return false;
 		}
 		return true;
@@ -89,7 +138,10 @@ public class Variable extends Ausdruck {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Variable [");
 		if (name != null)
-			builder.append("name=").append(name);
+			builder.append("name=").append(name).append(", ");
+		builder.append("ausdruckskonstante=").append(ausdruckskonstante).append(", ");
+		if (typ != null)
+			builder.append("typ=").append(typ);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -121,5 +173,9 @@ public class Variable extends Ausdruck {
 	@Override
 	public Typ bestimmeTyp(Umgebung e) {
 		return e.schliesseAus(name);
+	}
+	@Override
+	public boolean istAusdruckskonstante() {
+		return ausdruckskonstante;
 	}
 }

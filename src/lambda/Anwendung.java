@@ -33,12 +33,15 @@ public class Anwendung extends Ausdruck {
 	}
 	@Override
 	public boolean istReduzierbar() {
-		return anwender.istReduzierbar()||anwendung instanceof Abstraktion;
+		return anwender.istReduzierbar()||anwendung.istReduzierbar()||anwendung instanceof Abstraktion;
 	}
 	@Override
 	public Ausdruck reduziere() {
 		if(anwender.istReduzierbar()) {
 			anwender=anwender.reduziere();
+			return this;
+		} else if(anwendung.istReduzierbar()) {
+			anwendung=anwendung.reduziere();
 			return this;
 		} else if (anwendung instanceof Abstraktion) {
 			Abstraktion abs=(Abstraktion)anwendung;

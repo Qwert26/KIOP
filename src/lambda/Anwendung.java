@@ -1,5 +1,6 @@
 package lambda;
 import java.util.Set;
+import lambda.typen.*;
 public class Anwendung extends Ausdruck {
 	/**
 	 * Der Ausdruck, in dem etwas angewendet werden soll. Die linke Seite.
@@ -113,5 +114,25 @@ public class Anwendung extends Ausdruck {
 		Set<String> ret=anwendung.gebundeneVariablen();
 		ret.retainAll(anwender.gebundeneVariablen());
 		return ret;
+	}
+	@Override
+	public Umgebung extrahiereUmgebung() {
+		Umgebung e=anwender.extrahiereUmgebung();
+		e.erweitereUmUmgebung(anwendung.extrahiereUmgebung());
+		return e;
+	}
+	@Override
+	public Typ bestimmeTyp(Umgebung e) {
+		Typ anwender=this.anwender.bestimmeTyp(e);
+		Typ anwendung=this.anwendung.bestimmeTyp(e);
+		if(anwendung instanceof FunktionsTyp) {
+			if(((FunktionsTyp)anwendung).getInput().equals(anwender)) {
+				return ((FunktionsTyp)anwendung).getOutput();
+			} else {
+				throw new RuntimeException("Der Input von anwendung und der Typ von anwender stimmen nicht überein!");
+			}
+		} else {
+			throw new RuntimeException("Typ von anwendung ist kein Funktionstyp!");
+		}
 	}
 }

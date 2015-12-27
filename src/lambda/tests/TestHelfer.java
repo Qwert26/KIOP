@@ -7,6 +7,12 @@ final class TestHelfer {
 	public static Variable VAR(String name) {
 		return new Variable(name);
 	}
+	public static Variable VAR(long zahl) {
+		return new Variable(zahl);
+	}
+	public static Variable VAR(boolean wert) {
+		return new Variable(wert);
+	}
 	public static Abstraktion ABS(String name,Ausdruck term) {
 		return new Abstraktion(name,term);
 	}

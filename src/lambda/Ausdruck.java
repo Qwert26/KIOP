@@ -1,5 +1,6 @@
 package lambda;
 import java.util.*;
+import lambda.typen.*;
 public abstract class Ausdruck {
 	public Ausdruck() {
 		super();
@@ -42,6 +43,23 @@ public abstract class Ausdruck {
 	 * <tt>true</tt>, wenn irgendwas umbenannt wurde sonst <tt>false</tt>.
 	 */
 	public abstract boolean umbenennen(String von,String zu);
+	/**
+	 * @return
+	 * <tt>false</tt>, nur Variablen können Ausdruckskonstanten sein.
+	 */
+	public boolean istAusdruckskonstante() {
+		return false;
+	}
+	/**
+	 * @return
+	 * Eine Umgebung, welche nur die Typen von Ausdruckskonstanten enthält.
+	 */
+	public abstract Umgebung extrahiereUmgebung();
+	/**
+	 * @param e
+	 * @return
+	 */
+	public abstract Typ bestimmeTyp(Umgebung e);
 	@Override
 	public abstract int hashCode();
 	@Override

@@ -1,12 +1,25 @@
 package lambda;
 import java.util.*;
+import lambda.typen.*;
 public class Variable extends Ausdruck {
 	/**
 	 * Der Name der Variablen.
 	 */
 	private String name;
+	private boolean ausdruckskonstante=false;
+	private Typ typ;
 	public Variable(String name) {
 		this.name=name;
+	}
+	public Variable(long wert) {
+		name=wert+"";
+		ausdruckskonstante=true;
+		typ=new Zahl();
+	}
+	public Variable(boolean wert) {
+		name=wert+"";
+		ausdruckskonstante=true;
+		typ=new Wahrheitswert();
 	}
 	public synchronized final String getName() {
 		return name;
@@ -14,7 +27,9 @@ public class Variable extends Ausdruck {
 	@Override
 	public Set<String> freieVariablen() {
 		Set<String> ret=new TreeSet<String>();
-		ret.add(name);
+		if(!ausdruckskonstante) {
+			ret.add(name);
+		}
 		return ret;
 	}
 	@Override
@@ -80,7 +95,7 @@ public class Variable extends Ausdruck {
 	}
 	@Override
 	public boolean umbenennen(String von,String zu) {
-		if(name.equals(von)) {
+		if((!ausdruckskonstante)&&name.equals(von)) {
 			name=zu;
 			return true;
 		} else {
@@ -89,6 +104,22 @@ public class Variable extends Ausdruck {
 	}
 	@Override
 	public Set<String> gebundeneVariablen() {
-		return new TreeSet<String>();
+		Set<String>ret=new TreeSet<String>();
+		if(ausdruckskonstante) {
+			ret.add(name);
+		}
+		return ret;
+	}
+	@Override
+	public Umgebung extrahiereUmgebung() {
+		Umgebung e=new Umgebung();
+		if(ausdruckskonstante) {
+			e.erweitereUmKonstante(name,typ);
+		}
+		return e;
+	}
+	@Override
+	public Typ bestimmeTyp(Umgebung e) {
+		return e.schliesseAus(name);
 	}
 }

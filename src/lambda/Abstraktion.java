@@ -1,23 +1,36 @@
 package lambda;
 import java.util.*;
+import lambda.typen.*;
 public class Abstraktion extends Ausdruck {
 	/**
 	 * Der Name der Variablen.
 	 */
 	private String name;
 	/**
+	 * Der Typ der Variablen.
+	 */
+	private Typ typ;
+	/**
 	 * Der Ausdruck in dem die Variable gilt.
 	 */
 	private Ausdruck term;
 	public Abstraktion(String name,Ausdruck term) {
+		super();
 		this.name=name;
 		this.term=term;
+	}
+	public Abstraktion(String name,Typ typ,Ausdruck term) {
+		this(name,term);
+		this.typ=typ;
 	}
 	public synchronized final String getName() {
 		return name;
 	}
 	public synchronized final Ausdruck getTerm() {
 		return term;
+	}
+	public synchronized final Typ getTyp() {
+		return typ;
 	}
 	@Override
 	public Set<String> freieVariablen() {
@@ -104,5 +117,14 @@ public class Abstraktion extends Ausdruck {
 		Set<String> ret=term.gebundeneVariablen();
 		ret.add(name);
 		return ret;
+	}
+	@Override
+	public Umgebung extrahiereUmgebung() {
+		return term.extrahiereUmgebung();
+	}
+	@Override
+	public Typ bestimmeTyp(Umgebung e) {
+		Typ term=this.term.bestimmeTyp(e.fügeHinzu(name,typ));
+		return new FunktionsTyp(typ,term);
 	}
 }

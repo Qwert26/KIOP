@@ -1,14 +1,22 @@
 package lambda.tests;
-import static org.junit.Assert.*;
-import org.junit.*;
+import static lambda.tests.TestHelfer.APP;
+import static lambda.tests.TestHelfer.VAR;
+import static lambda.typen.Ausdruckskonstanten.AND;
+import static lambda.typen.Ausdruckskonstanten.FALSE;
+import static lambda.typen.Ausdruckskonstanten.OR;
+import static lambda.typen.Ausdruckskonstanten.TRUE;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assume.assumeTrue;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
-import lambda.*;
+
+import lambda.Ausdruck;
 import lambda.typen.Ausdruckskonstanten;
-import static lambda.typen.Ausdruckskonstanten.*;
-import static lambda.tests.TestHelfer.*;
+import lambda.typen.Wahrheitswert;
 @RunWith(Parameterized.class)
 public class TestWahrheitsVerknüpfung {
 	@Parameters(name="{index}:{0} {1} {2}={3}")
@@ -26,8 +34,9 @@ public class TestWahrheitsVerknüpfung {
 	public Ausdruckskonstanten ergebnis;
 	public TestWahrheitsVerknüpfung() {}
 	@Test
-	public void testUndFunktion() {
+	public void testVerknüpfung() {
 		Ausdruck funktion=APP(VAR(operation),VAR(links),VAR(rechts));
+		assumeTrue(funktion.bestimmeTyp(funktion.extrahiereUmgebung()).equals(new Wahrheitswert()));
 		while(funktion.istReduzierbar()) {
 			funktion=funktion.reduziere();
 		}

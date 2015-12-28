@@ -1,9 +1,9 @@
 package lambda;
 import java.util.*;
 import lambda.typen.*;
-class UndAusdruck extends Ausdruck {
+class AdditionAusdruck extends Ausdruck {
 	private Ausdruck links,rechts;
-	public UndAusdruck() {
+	public AdditionAusdruck() {
 		super();
 	}
 	@Override
@@ -15,7 +15,7 @@ class UndAusdruck extends Ausdruck {
 		return new TreeSet<String>();
 	}
 	@Override
-	public Ausdruck substitution(String name,Ausdruck ersatz) {
+	public Ausdruck substitution(String name, Ausdruck ersatz) {
 		if(links==null) {
 			links=ersatz;
 		} else if(rechts==null) {
@@ -36,18 +36,24 @@ class UndAusdruck extends Ausdruck {
 			rechts=rechts.reduziere();
 			return this;
 		} else {
-			Variable vl=(Variable)links;
-			Variable vr=(Variable)rechts;
-			Ausdruckskonstanten konl=Ausdruckskonstanten.valueOf(vl.getName()),konr=Ausdruckskonstanten.valueOf(vr.getName());
-			if(konl==Ausdruckskonstanten.FALSE) {
-				return new Variable(konl);
-			} else {
-				return new Variable(konr);
-			}
+			Variable vl=(Variable)links,vr=(Variable)rechts;
+			long wertl=Long.parseLong(vl.getName()),wertr=Long.parseLong(vr.getName());
+			return new Variable(wertl+wertr);
 		}
 	}
 	@Override
-	public boolean umbenennen(String von,String zu) {
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("AdditionAusdruck [");
+		if (links != null)
+			builder.append("links=").append(links).append(", ");
+		if (rechts != null)
+			builder.append("rechts=").append(rechts);
+		builder.append("]");
+		return builder.toString();
+	}
+	@Override
+	public boolean umbenennen(String von, String zu) {
 		return false;
 	}
 	@Override
@@ -56,7 +62,7 @@ class UndAusdruck extends Ausdruck {
 	}
 	@Override
 	public Typ bestimmeTyp(Umgebung e) {
-		return Ausdruckskonstanten.AND.erhalteTyp();
+		return Ausdruckskonstanten.PLUS.erhalteTyp();
 	}
 	@Override
 	public int hashCode() {
@@ -74,10 +80,10 @@ class UndAusdruck extends Ausdruck {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof UndAusdruck)) {
+		if (!(obj instanceof AdditionAusdruck)) {
 			return false;
 		}
-		UndAusdruck other = (UndAusdruck) obj;
+		AdditionAusdruck other = (AdditionAusdruck) obj;
 		if (links == null) {
 			if (other.links != null) {
 				return false;
@@ -94,23 +100,8 @@ class UndAusdruck extends Ausdruck {
 		}
 		return true;
 	}
-	/**
-	 * @return
-	 * <tt>true</tt>
-	 */
 	@Override
 	public boolean istAusdruckskonstante() {
 		return true;
-	}
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("UndAusdruck [");
-		if (links != null)
-			builder.append("links=").append(links).append(", ");
-		if (rechts != null)
-			builder.append("rechts=").append(rechts);
-		builder.append("]");
-		return builder.toString();
 	}
 }

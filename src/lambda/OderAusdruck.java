@@ -1,9 +1,9 @@
 package lambda;
 import java.util.*;
 import lambda.typen.*;
-class UndAusdruck extends Ausdruck {
+class OderAusdruck extends Ausdruck {
 	private Ausdruck links,rechts;
-	public UndAusdruck() {
+	public OderAusdruck() {
 		super();
 	}
 	@Override
@@ -15,7 +15,7 @@ class UndAusdruck extends Ausdruck {
 		return new TreeSet<String>();
 	}
 	@Override
-	public Ausdruck substitution(String name,Ausdruck ersatz) {
+	public Ausdruck substitution(String name, Ausdruck ersatz) {
 		if(links==null) {
 			links=ersatz;
 		} else if(rechts==null) {
@@ -32,14 +32,13 @@ class UndAusdruck extends Ausdruck {
 		if(links.istReduzierbar()) {
 			links=links.reduziere();
 			return this;
-		} else if(rechts.istReduzierbar()) {
+		} else if (rechts.istReduzierbar()) {
 			rechts=rechts.reduziere();
 			return this;
 		} else {
-			Variable vl=(Variable)links;
-			Variable vr=(Variable)rechts;
+			Variable vl=(Variable) links,vr=(Variable) rechts;
 			Ausdruckskonstanten konl=Ausdruckskonstanten.valueOf(vl.getName()),konr=Ausdruckskonstanten.valueOf(vr.getName());
-			if(konl==Ausdruckskonstanten.FALSE) {
+			if(konl==Ausdruckskonstanten.TRUE) {
 				return new Variable(konl);
 			} else {
 				return new Variable(konr);
@@ -47,7 +46,7 @@ class UndAusdruck extends Ausdruck {
 		}
 	}
 	@Override
-	public boolean umbenennen(String von,String zu) {
+	public boolean umbenennen(String von, String zu) {
 		return false;
 	}
 	@Override
@@ -56,7 +55,7 @@ class UndAusdruck extends Ausdruck {
 	}
 	@Override
 	public Typ bestimmeTyp(Umgebung e) {
-		return Ausdruckskonstanten.AND.erhalteTyp();
+		return Ausdruckskonstanten.OR.erhalteTyp();
 	}
 	@Override
 	public int hashCode() {
@@ -74,10 +73,10 @@ class UndAusdruck extends Ausdruck {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof UndAusdruck)) {
+		if (!(obj instanceof OderAusdruck)) {
 			return false;
 		}
-		UndAusdruck other = (UndAusdruck) obj;
+		OderAusdruck other = (OderAusdruck) obj;
 		if (links == null) {
 			if (other.links != null) {
 				return false;
@@ -94,10 +93,6 @@ class UndAusdruck extends Ausdruck {
 		}
 		return true;
 	}
-	/**
-	 * @return
-	 * <tt>true</tt>
-	 */
 	@Override
 	public boolean istAusdruckskonstante() {
 		return true;
@@ -105,7 +100,7 @@ class UndAusdruck extends Ausdruck {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("UndAusdruck [");
+		builder.append("OderAusdruck [");
 		if (links != null)
 			builder.append("links=").append(links).append(", ");
 		if (rechts != null)

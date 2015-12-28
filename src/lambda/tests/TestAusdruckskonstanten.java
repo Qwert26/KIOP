@@ -3,9 +3,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
-@SuiteClasses({TestAbstraktion.class,TestAnwendung.class,TestVariable.class,TestAusdruckskonstanten.class})
-public class TestLamba {
-	public TestLamba() {
+@SuiteClasses({TestWahrheitsVerknüpfung.class})
+public class TestAusdruckskonstanten {
+	public TestAusdruckskonstanten() {
 		super();
 	}
 }

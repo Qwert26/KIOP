@@ -45,8 +45,7 @@ public class Anwendung extends Ausdruck {
 			anwendung=anwendung.reduziere();
 			return this;
 		} else if(anwendung.istAusdruckskonstante()) {
-			//TODO Wie reduziert man eine Ausdruckskonstante?
-			return this;
+			return anwendung.substitution(null,anwender);
 		} else if (anwendung instanceof Abstraktion) {
 			Set<String>kollisionen=anwendung.gebundeneVariablen();
 			kollisionen.retainAll(anwender.freieVariablen());

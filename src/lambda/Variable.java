@@ -74,15 +74,15 @@ public class Variable extends Ausdruck {
 			case FALSE:
 				return this;
 			case MULT:
-				break;
+				return new MultiplikationAusdruck();
 			case NOT:
-				break;
+				return new NichtAusdruck();
 			case OR:
-				break;
+				return new OderAusdruck();
 			case PLUS:
-				break;
+				return new AdditionAusdruck();
 			case SUCC:
-				break;
+				return new AdditionAusdruck().substitution(null,new Variable(1));
 			case TRUE:
 				return this;
 			default:

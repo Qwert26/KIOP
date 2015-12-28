@@ -1,5 +1,4 @@
 package lambda.typen;
-import lambda.*;
 public enum Ausdruckskonstanten {
 	AND {
 			@Override
@@ -50,5 +49,4 @@ public enum Ausdruckskonstanten {
 			}
 		};
 	public abstract Typ erhalteTyp();
-	//public abstract Ausdruck erhalteAusdruck();
 }

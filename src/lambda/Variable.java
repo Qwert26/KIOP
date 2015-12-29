@@ -46,10 +46,10 @@ public class Variable extends Ausdruck {
 	@Override
 	public boolean istReduzierbar() {
 		if(ausdruckskonstante) {
-			Ausdruckskonstanten konstante=Ausdruckskonstanten.valueOf(name);
-			if(konstante==null) {
+			if(typ instanceof Zahl) {
 				return false;
 			} else {
+				Ausdruckskonstanten konstante=Ausdruckskonstanten.valueOf(name);
 				if(konstante==Ausdruckskonstanten.TRUE|konstante==Ausdruckskonstanten.FALSE) {
 					return false;
 				} else {
@@ -68,26 +68,29 @@ public class Variable extends Ausdruck {
 	@Override
 	public Ausdruck reduziere() {
 		if(ausdruckskonstante) {
-			switch(Ausdruckskonstanten.valueOf(name)) {
-			case AND:
-				return new UndAusdruck();
-			case FALSE:
+			if(typ instanceof Zahl) {
 				return this;
-			case MULT:
-				return new MultiplikationAusdruck();
-			case NOT:
-				return new NichtAusdruck();
-			case OR:
-				return new OderAusdruck();
-			case PLUS:
-				return new AdditionAusdruck();
-			case SUCC:
-				return new AdditionAusdruck().substitution(null,new Variable(1));
-			case TRUE:
-				return this;
-			default:
-				//Es war eine Zahl.
-				return this;
+			} else {
+				switch(Ausdruckskonstanten.valueOf(name)) {
+				case AND:
+					return new UndAusdruck();
+				case FALSE:
+					return this;
+				case MULT:
+					return new MultiplikationAusdruck();
+				case NOT:
+					return new NichtAusdruck();
+				case OR:
+					return new OderAusdruck();
+				case PLUS:
+					return new AdditionAusdruck();
+				case SUCC:
+					return new NachfolgerAusdruck();
+				case TRUE:
+					return this;
+				default:
+					throw new InternalError("Irgendetwas ist gewaltig schief gelaufen!");
+				}
 			}
 		} else {
 			return this;

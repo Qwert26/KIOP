@@ -14,6 +14,13 @@ final class TestHelfer {
 	public static Variable VAR(Ausdruckskonstanten konstante) {
 		return new Variable(konstante);
 	}
+	public static Variable VAR(boolean wert) {
+		if(wert) {
+			return new Variable(Ausdruckskonstanten.TRUE);
+		} else {
+			return new Variable(Ausdruckskonstanten.FALSE);
+		}
+	}
 	public static Abstraktion ABS(String name,Ausdruck term) {
 		return new Abstraktion(name,term);
 	}
@@ -27,5 +34,8 @@ final class TestHelfer {
 			System.arraycopy(rechteSeiten,0,next,0,next.length);
 			return new Anwendung(APP(links,next),rechteSeiten[next.length]);
 		}
+	}
+	public static Verzweigung IF(Ausdruck wenn,Ausdruck dann,Ausdruck sonst) {
+		return new Verzweigung(wenn,dann,sonst);
 	}
 }

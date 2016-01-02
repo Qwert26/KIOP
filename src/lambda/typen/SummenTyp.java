@@ -5,6 +5,9 @@ public class SummenTyp extends Typ {
 	public SummenTyp(Typ...typen) {
 		this.typen=typen;
 	}
+	public synchronized final Typ[] getTypen() {
+		return typen;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -24,6 +24,9 @@ final class TestHelfer {
 	public static Abstraktion ABS(String name,Ausdruck term) {
 		return new Abstraktion(name,term);
 	}
+	public static Abstraktion ABS(String name,Typ typ,Ausdruck term) {
+		return new Abstraktion(name,typ,term);
+	}
 	public static Anwendung APP(Ausdruck links,Ausdruck...rechteSeiten) {
 		if(rechteSeiten.length==0) {
 			throw new IllegalArgumentException("Keinen rechten Ausdruck angegeben!");
@@ -37,5 +40,8 @@ final class TestHelfer {
 	}
 	public static Verzweigung IF(Ausdruck wenn,Ausdruck dann,Ausdruck sonst) {
 		return new Verzweigung(wenn,dann,sonst);
+	}
+	public static Case CASE(Ausdruck in,Ausdruck...terme) {
+		return new Case(in,terme);
 	}
 }

@@ -20,12 +20,19 @@ class MultiplikationAusdruck extends Ausdruck {
 			links=ersatz;
 		} else if(rechts==null) {
 			rechts=ersatz;
+		} else {
+			links=links.substitution(name, ersatz);
+			rechts=rechts.substitution(name, ersatz);
 		}
 		return this;
 	}
 	@Override
 	public boolean istReduzierbar() {
-		return links!=null&rechts!=null;
+		if(links==null||rechts==null) {
+			return false;
+		} else {
+			return (links.istAusdruckskonstante()&rechts.istAusdruckskonstante())|links.istReduzierbar()|rechts.istReduzierbar();
+		}
 	}
 	@Override
 	public Ausdruck reduziere() {
@@ -35,10 +42,12 @@ class MultiplikationAusdruck extends Ausdruck {
 		} else if(rechts.istReduzierbar()) {
 			rechts=rechts.reduziere();
 			return this;
-		} else {
+		} else if(links.istAusdruckskonstante()&&rechts.istAusdruckskonstante()) {
 			Variable vl=(Variable)links,vr=(Variable)rechts;
 			long wertl=Long.parseLong(vl.getName()),wertr=Long.parseLong(vr.getName());
 			return new Variable(wertl*wertr);
+		} else {
+			return this;
 		}
 	}
 	@Override
@@ -62,7 +71,16 @@ class MultiplikationAusdruck extends Ausdruck {
 	}
 	@Override
 	public Typ bestimmeTyp(Umgebung e) {
-		return Ausdruckskonstanten.PLUS.erhalteTyp();
+		FunktionsTyp t=(FunktionsTyp)Ausdruckskonstanten.MULT.erhalteTyp();
+		if(links==null) {
+			return t;
+		} else {
+			if(rechts==null) {
+				return t.getOutput();
+			} else {
+				return ((FunktionsTyp)t.getOutput()).getOutput();
+			}
+		}
 	}
 	@Override
 	public int hashCode() {

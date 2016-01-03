@@ -20,12 +20,19 @@ class UndAusdruck extends Ausdruck {
 			links=ersatz;
 		} else if(rechts==null) {
 			rechts=ersatz;
+		} else {
+			links=links.substitution(name,ersatz);
+			rechts=rechts.substitution(name,ersatz);
 		}
 		return this;
 	}
 	@Override
 	public boolean istReduzierbar() {
-		return links!=null&rechts!=null;
+		if(links==null||rechts==null) {
+			return false;
+		} else {
+			return (links.istAusdruckskonstante()&rechts.istAusdruckskonstante())|links.istReduzierbar()|rechts.istReduzierbar();
+		}
 	}
 	@Override
 	public Ausdruck reduziere() {
@@ -35,7 +42,7 @@ class UndAusdruck extends Ausdruck {
 		} else if(rechts.istReduzierbar()) {
 			rechts=rechts.reduziere();
 			return this;
-		} else {
+		} else if(links.istAusdruckskonstante()&rechts.istAusdruckskonstante()) {
 			Variable vl=(Variable)links;
 			Variable vr=(Variable)rechts;
 			Ausdruckskonstanten konl=Ausdruckskonstanten.valueOf(vl.getName()),konr=Ausdruckskonstanten.valueOf(vr.getName());
@@ -44,6 +51,8 @@ class UndAusdruck extends Ausdruck {
 			} else {
 				return new Variable(konr);
 			}
+		} else {
+			return this;
 		}
 	}
 	@Override
@@ -56,7 +65,16 @@ class UndAusdruck extends Ausdruck {
 	}
 	@Override
 	public Typ bestimmeTyp(Umgebung e) {
-		return Ausdruckskonstanten.AND.erhalteTyp();
+		FunktionsTyp t=(FunktionsTyp)Ausdruckskonstanten.AND.erhalteTyp();
+		if(links==null) {
+			return t;
+		} else {
+			if(rechts==null) {
+				return t.getOutput();
+			} else {
+				return ((FunktionsTyp)t.getOutput()).getOutput();
+			}
+		}
 	}
 	@Override
 	public int hashCode() {

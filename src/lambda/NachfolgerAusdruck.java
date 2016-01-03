@@ -18,21 +18,29 @@ class NachfolgerAusdruck extends Ausdruck {
 	public Ausdruck substitution(String name, Ausdruck ersatz) {
 		if(zahl==null) {
 			zahl=ersatz;
+		} else {
+			zahl=zahl.substitution(name,ersatz);
 		}
 		return this;
 	}
 	@Override
 	public boolean istReduzierbar() {
-		return zahl!=null;
+		if(zahl==null) {
+			return false;
+		} else {
+			return zahl.istReduzierbar()||zahl.istAusdruckskonstante();
+		}
 	}
 	@Override
 	public Ausdruck reduziere() {
 		if(zahl.istReduzierbar()) {
 			zahl=zahl.reduziere();
 			return this;
-		} else {
+		} else if(zahl.istAusdruckskonstante()) {
 			Variable v=(Variable)zahl;
 			return new Variable(1+Long.parseLong(v.getName()));
+		} else {
+			return this;
 		}
 	}
 	@Override
@@ -58,7 +66,12 @@ class NachfolgerAusdruck extends Ausdruck {
 	}
 	@Override
 	public Typ bestimmeTyp(Umgebung e) {
-		return Ausdruckskonstanten.SUCC.erhalteTyp();
+		FunktionsTyp t=(FunktionsTyp)Ausdruckskonstanten.SUCC.erhalteTyp();
+		if(zahl==null) {
+			return t;
+		} else {
+			return t.getOutput();
+		}
 	}
 	@Override
 	public int hashCode() {

@@ -18,6 +18,8 @@ class NichtAusdruck extends Ausdruck {
 	public Ausdruck substitution(String name, Ausdruck ersatz) {
 		if(ausdruck==null) {
 			ausdruck=ersatz;
+		} else {
+			ausdruck=ausdruck.substitution(name, ersatz);
 		}
 		return this;
 	}
@@ -30,7 +32,7 @@ class NichtAusdruck extends Ausdruck {
 		if(ausdruck.istReduzierbar()) {
 			ausdruck=ausdruck.reduziere();
 			return this;
-		} else {
+		} else if(ausdruck.istAusdruckskonstante()) {
 			Variable v=(Variable)ausdruck;
 			Ausdruckskonstanten wert=Ausdruckskonstanten.valueOf(v.getName());
 			if(wert==Ausdruckskonstanten.FALSE) {
@@ -38,6 +40,8 @@ class NichtAusdruck extends Ausdruck {
 			} else {
 				return new Variable(Ausdruckskonstanten.FALSE);
 			}
+		} else {
+			return this;
 		}
 	}
 	@Override
@@ -50,7 +54,12 @@ class NichtAusdruck extends Ausdruck {
 	}
 	@Override
 	public Typ bestimmeTyp(Umgebung e) {
-		return Ausdruckskonstanten.NOT.erhalteTyp();
+		FunktionsTyp t=(FunktionsTyp)Ausdruckskonstanten.NOT.erhalteTyp();
+		if(ausdruck==null) {
+			return t;
+		} else {
+			return t.getOutput();
+		}
 	}
 	@Override
 	public int hashCode() {

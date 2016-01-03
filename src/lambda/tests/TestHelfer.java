@@ -41,7 +41,4 @@ final class TestHelfer {
 	public static Verzweigung IF(Ausdruck wenn,Ausdruck dann,Ausdruck sonst) {
 		return new Verzweigung(wenn,dann,sonst);
 	}
-	public static Case CASE(Ausdruck in,Ausdruck...terme) {
-		return new Case(in,terme);
-	}
 }

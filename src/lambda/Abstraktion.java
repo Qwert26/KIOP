@@ -123,7 +123,7 @@ public class Abstraktion extends Ausdruck {
 		return term.extrahiereUmgebung();
 	}
 	@Override
-	public Typ bestimmeTyp(Umgebung e) {
+	public FunktionsTyp bestimmeTyp(Umgebung e) {
 		Typ term=this.term.bestimmeTyp(e.fügeHinzu(name,typ));
 		return new FunktionsTyp(typ,term);
 	}

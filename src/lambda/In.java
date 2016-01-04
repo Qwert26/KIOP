@@ -28,7 +28,7 @@ public class In extends Ausdruck {
 		return ausdruck.gebundeneVariablen();
 	}
 	@Override
-	public Ausdruck substitution(String name,Ausdruck ersatz) {
+	public In substitution(String name,Ausdruck ersatz) {
 		ausdruck=ausdruck.substitution(name, ersatz);
 		return this;
 	}
@@ -52,7 +52,7 @@ public class In extends Ausdruck {
 		return ausdruck.extrahiereUmgebung();
 	}
 	@Override
-	public Typ bestimmeTyp(Umgebung e) {
+	public SummenTyp bestimmeTyp(Umgebung e) {
 		if(ausdruck.bestimmeTyp(e).equals(kapsel.getTypen()[position])) {
 			return kapsel;
 		} else {

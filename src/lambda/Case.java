@@ -2,13 +2,13 @@ package lambda;
 import java.util.*;
 import lambda.typen.*;
 public class Case extends Ausdruck {
-	private In in;
+	private Ausdruck in;
 	private Abstraktion[]aktionen;
-	public Case(In in,Abstraktion...aktionen) {
+	public Case(Ausdruck in,Abstraktion...aktionen) {
 		this.in=in;
 		this.aktionen=aktionen;
 	}
-	public synchronized final In getIn() {
+	public synchronized final Ausdruck getIn() {
 		return in;
 	}
 	public synchronized final Abstraktion[] getAktionen() {
@@ -37,15 +37,17 @@ public class Case extends Ausdruck {
 	}
 	@Override
 	public boolean istReduzierbar() {
-		return true;
+		return in.istReduzierbar()||in instanceof In;
 	}
 	@Override
 	public Ausdruck reduziere() {
 		if(in.istReduzierbar()) {
 			in=in.reduziere();
 			return this;
+		} else if(in instanceof In) {
+			return new Anwendung(aktionen[((In)in).getPosition()],((In)in).getAusdruck());
 		} else {
-			return new Anwendung(aktionen[in.getPosition()],in.getAusdruck());
+			return this;
 		}
 	}
 	@Override
@@ -66,7 +68,7 @@ public class Case extends Ausdruck {
 	}
 	@Override
 	public Typ bestimmeTyp(Umgebung e) {
-		SummenTyp inTyp=in.bestimmeTyp(e);
+		SummenTyp inTyp=(SummenTyp)in.bestimmeTyp(e);
 		if(inTyp.getTypen().length==aktionen.length) {
 			for(int i=0;i<aktionen.length;i++) {
 				if(!aktionen[i].getTyp().equals(inTyp.getTypen()[i])) {

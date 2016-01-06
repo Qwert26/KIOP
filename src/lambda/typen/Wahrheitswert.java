@@ -19,4 +19,8 @@ public class Wahrheitswert extends Typ {
 	public String toString() {
 		return "Wahrheitswert";
 	}
+	@Override
+	public boolean istUntertypVon(Typ t) {
+		return equals(t);
+	}
 }

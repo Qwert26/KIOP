@@ -41,4 +41,22 @@ public class SummenTyp extends Typ {
 		builder.append("]");
 		return builder.toString();
 	}
+	@Override
+	public boolean istUntertypVon(Typ t) {
+		if(t instanceof SummenTyp) {
+			SummenTyp other=(SummenTyp)t;
+			if(other.typen.length==typen.length) {
+				for(int i=0;i<typen.length;i++) {
+					if(!typen[i].istUntertypVon(other.typen[i])) {
+						return false;
+					}
+				}
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 }

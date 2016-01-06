@@ -1,5 +1,6 @@
 package lambda.typen;
 import java.util.*;
+import java.util.Map.Entry;
 public class StrukturTyp extends Typ {
 	private Map<String,Typ> typen;
 	public StrukturTyp() {
@@ -44,5 +45,20 @@ public class StrukturTyp extends Typ {
 			builder.append("typen=").append(typen);
 		builder.append("]");
 		return builder.toString();
+	}
+	@Override
+	public boolean istUntertypVon(Typ t) {
+		if(t instanceof StrukturTyp) {
+			StrukturTyp other=(StrukturTyp)t;
+			for(Entry<String,Typ>eintrag:other.typen.entrySet()) {
+				Typ ourEntry=typen.get(eintrag.getKey());
+				if(!ourEntry.istUntertypVon(eintrag.getValue())) {
+					return false;
+				}
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

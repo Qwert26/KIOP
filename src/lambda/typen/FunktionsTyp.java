@@ -60,4 +60,13 @@ public class FunktionsTyp extends Typ {
 		builder.append("]");
 		return builder.toString();
 	}
+	@Override
+	public boolean istUntertypVon(Typ t) {
+		if(t instanceof FunktionsTyp) {
+			FunktionsTyp other=(FunktionsTyp)t;
+			return input.istUntertypVon(other.input)&&output.istUntertypVon(other.output);
+		} else {
+			return false;
+		}
+	}
 }

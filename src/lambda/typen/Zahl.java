@@ -19,4 +19,8 @@ public class Zahl extends Typ {
 	public String toString() {
 		return "Zahl";
 	}
+	@Override
+	public boolean istUntertypVon(Typ t) {
+		return equals(t);
+	}
 }

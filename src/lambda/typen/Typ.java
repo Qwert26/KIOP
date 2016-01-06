@@ -7,4 +7,5 @@ public abstract class Typ {
 	public abstract boolean equals(Object obj);
 	@Override
 	public abstract String toString();
+	public abstract boolean istUntertypVon(Typ t);
 }
